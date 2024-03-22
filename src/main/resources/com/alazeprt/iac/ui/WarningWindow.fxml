@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0"
+            prefWidth="300.0" style="-fx-background-color: #cdd8e0;" xmlns="http://javafx.com/javafx/8"
+            fx:controller="com.alazeprt.iac.ui.WarningController" xmlns:fx="http://javafx.com/fxml/1">
+   <Label layoutX="14.0" layoutY="14.0" text="Warning" textFill="#ffbc00">
+      <font>
+         <Font name="System Bold" size="24.0"/>
+      </font>
+   </Label>
+   <Label fx:id="warningMessage" layoutX="14.0" layoutY="67.0" prefHeight="80.0" prefWidth="250.0" wrapText="true"/>
+   <Button layoutX="214.0" layoutY="157.0" mnemonicParsing="false" style="-fx-background-color: #9DB2BF;"
+           text="Continue" onAction="#continueAction" />
+   <Button layoutX="150.0" layoutY="157.0" mnemonicParsing="false" style="-fx-background-color: #c4d1da;"
+           text="Cancel" onAction="#cancelAction"/>
+</AnchorPane>

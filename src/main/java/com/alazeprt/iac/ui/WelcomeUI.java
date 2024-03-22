@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 
 public class WelcomeUI extends Application {
+    private static Stage stage;
 
     public static void main(String[] args) {
         launch(args);
@@ -20,6 +21,12 @@ public class WelcomeUI extends Application {
         Scene scene = new Scene(root, 800, 600);
         primaryStage.setTitle("IACreator");
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
+        stage = primaryStage;
+    }
+
+    public static void closeWelcomeStage() {
+        stage.close();
     }
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" style="-fx-background-color: #cdd8e0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alazeprt.iac.ui.ProjectUIController">
+   <children>
+      <Label layoutX="40.0" layoutY="40.0" text="Name (namespace): " textFill="#27374d">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="40.0" layoutY="120.0" text="Location: " textFill="#27374d">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="namespace" layoutX="194.0" layoutY="36.5" onKeyTyped="#onInputName" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #d5dfe7;" />
+      <TextField fx:id="folder" layoutX="117.0" layoutY="116.5" onKeyTyped="#onChangeFolder" prefHeight="30.0" prefWidth="250.0" style="-fx-background-color: #d5dfe7;" />
+      <Button layoutX="378.0" layoutY="357.0" mnemonicParsing="false" onAction="#cancel" style="-fx-background-color: #c4d1da;" text="Cancel" />
+      <Button layoutX="309.0" layoutY="357.0" mnemonicParsing="false" onAction="#create" style="-fx-background-color: #9DB2BF;" text="Create" />
+      <Button layoutX="378.0" layoutY="117.0" mnemonicParsing="false" onAction="#openFolderChooser" prefHeight="29.0" prefWidth="29.0" style="-fx-background-color: rgba(0,0,0,0);" />
+      <ImageView fx:id="folderIcon" fitHeight="29.0" fitWidth="29.0" layoutX="378.0" layoutY="117.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="nameError" layoutX="40.0" layoutY="65.0" text="Error: The namespace must be letters, numbers, or underscores" textFill="#f50101" visible="false" />
+      <Label fx:id="locationWarn" layoutX="40.0" layoutY="145.0" text="Warning: The location is a directory rather than a file name" textFill="#f5b002" visible="false" />
+   </children>
+</AnchorPane>
