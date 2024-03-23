@@ -24,9 +24,9 @@
       <Button layoutX="25.0" layoutY="545.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0"
               style="-fx-background-color: #b4c2ce;" text="Settings"/>
       <Button layoutX="25.0" layoutY="485.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0"
-              style="-fx-background-color: #b4c2ce;" text="Issues Tracker"/>
+              style="-fx-background-color: #b4c2ce;" text="Issues Tracker" onAction="#openIssues"/>
       <Button layoutX="25.0" layoutY="425.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0"
-              style="-fx-background-color: #b4c2ce;" text="Github"/>
+              style="-fx-background-color: #b4c2ce;" text="Github" onAction="#openGithub"/>
       <Button layoutX="25.0" layoutY="365.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0"
               style="-fx-background-color: #b4c2ce;" text="About" onAction="#onViewAbout"/>
    </AnchorPane>

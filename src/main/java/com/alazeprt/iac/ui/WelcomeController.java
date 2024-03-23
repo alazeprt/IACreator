@@ -14,8 +14,11 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -85,5 +88,25 @@ public class WelcomeController {
     public void onViewAbout() throws IOException {
         logger.info("Opening About stage...");
         AboutUIController.showAboutStage();
+    }
+
+    public void openGithub() {
+        new Thread(() -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/alazeprt/IACreator"));
+            } catch (IOException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+    public void openIssues() {
+        new Thread(() -> {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/alazeprt/IACreator/issues"));
+            } catch (IOException | URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 }
