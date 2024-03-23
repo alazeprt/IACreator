@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class AboutUIController {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(AboutUIController.class.getResource("About.fxml"));
         Scene scene = new Scene(root, 300, 200);
+        stage.getIcons().add(new Image(AboutUIController.class.getResource("image/icon.png").toString()));
         stage.setTitle("About");
         stage.setScene(scene);
         stage.setResizable(false);

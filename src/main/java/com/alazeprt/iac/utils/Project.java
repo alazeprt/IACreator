@@ -4,6 +4,7 @@ import com.alazeprt.iac.ui.WelcomeUI;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -42,6 +43,7 @@ public class Project {
         Stage createProjectStage = new Stage();
         Parent root = FXMLLoader.load(WelcomeUI.class.getResource("NewProject.fxml"));
         Scene scene = new Scene(root, 450, 400);
+        createProjectStage.getIcons().add(new Image(WelcomeUI.class.getResource("image/icon.png").toString()));
         createProjectStage.setTitle("New Project...");
         createProjectStage.setScene(scene);
         createProjectStage.setResizable(false);

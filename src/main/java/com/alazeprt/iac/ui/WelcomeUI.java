@@ -3,6 +3,7 @@ package com.alazeprt.iac.ui;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ public class WelcomeUI extends Application {
         logger.info("Loading welcome page...");
         Parent root = FXMLLoader.load(WelcomeUI.class.getResource("WelcomePage.fxml"));
         Scene scene = new Scene(root, 800, 600);
+        primaryStage.getIcons().add(new Image(WelcomeUI.class.getResource("image/icon.png").toString()));
         primaryStage.setTitle("IACreator");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);

@@ -3,6 +3,7 @@ package com.alazeprt.iac.ui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ public class WarningUI {
 
     private static void showWarningStageHandler() throws IOException {
         Stage stage = new Stage();
+        stage.getIcons().add(new Image(WarningUI.class.getResource("image/icon.png").toString()));
         Parent root = FXMLLoader.load(WarningUI.class.getResource("WarningWindow.fxml"));
         Scene scene = new Scene(root, 300, 200);
         stage.setTitle("Warning");

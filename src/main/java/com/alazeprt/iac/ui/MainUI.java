@@ -3,6 +3,7 @@ package com.alazeprt.iac.ui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ public class MainUI {
         Stage projectStage = new Stage();
         Parent root = FXMLLoader.load(MainUI.class.getResource("MainPage.fxml"));
         Scene scene = new Scene(root, 960, 640);
+        projectStage.getIcons().add(new Image(MainUI.class.getResource("image/icon.png").toString()));
         projectStage.setTitle("Project - " + projectName);
         projectStage.setScene(scene);
         projectStage.setResizable(false);
