@@ -24,6 +24,12 @@ build:
     paths:
       - build
       - .gradle
+  artifacts:
+    name: "Artifacts"
+    paths:
+      - build/libs/*.jar
+    expire_in: 7 days
+    when: always
 
 test:
   stage: test
