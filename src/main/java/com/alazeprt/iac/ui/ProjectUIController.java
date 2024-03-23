@@ -109,20 +109,12 @@ public class ProjectUIController {
             locationWarn.setVisible(false);
             return;
         }
-        if(file.getName().contains(".")) {
-            locationWarn.setVisible(true);
-        } else {
-            locationWarn.setVisible(false);
-        }
+        locationWarn.setVisible(file.getName().contains("."));
     }
 
     public void onInputName() {
         Pattern pattern = Pattern.compile("^[0-9a-zA-Z_]{1,}$");
-        if(pattern.matcher(namespace.getText()).matches()) {
-            nameError.setVisible(false);
-        } else {
-            nameError.setVisible(true);
-        }
+        nameError.setVisible(!pattern.matcher(namespace.getText()).matches());
     }
 
     public static void addProjects(Project project) {
@@ -157,6 +149,23 @@ public class ProjectUIController {
         removeImage.setFitHeight(30);
         anchorPane.getChildren().add(removeImage);
         removeImage.setMouseTransparent(true);
+        Button removeButton = getButton(project);
+        anchorPane.getChildren().add(removeButton);
+        anchorPane.setOnMouseClicked(event -> {
+            if(event.getX() >= 480 && event.getX() <= 510 && event.getY() >= 35 && event.getY() <= 65) {
+                return;
+            }
+            try {
+                WelcomeController.openProject(project);
+            } catch (IOException e) {
+                logger.error("Failed to open project: " + e);
+            }
+        });
+        projectListPane.getChildren().add(anchorPane);
+        projectCount++;
+    }
+
+    private static Button getButton(Project project) {
         Button removeButton = new Button();
         removeButton.setStyle("-fx-background-color: rgba(0,0,0,0)");
         removeButton.setLayoutX(480);
@@ -179,19 +188,6 @@ public class ProjectUIController {
                 ProjectUIController.addProjects(project2);
             }
         });
-        anchorPane.getChildren().add(removeButton);
-        anchorPane.setOnMouseClicked(event -> {
-            if(event.getX() >= 480 && event.getX() <= 510 && event.getY() >= 35 && event.getY() <= 65) {
-                return;
-            }
-            try {
-                WelcomeController.openProject(project);
-            } catch (IOException e) {
-                logger.error("Failed to open project: " + e);
-                e.printStackTrace();
-            }
-        });
-        projectListPane.getChildren().add(anchorPane);
-        projectCount++;
+        return removeButton;
     }
 }

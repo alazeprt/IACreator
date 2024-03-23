@@ -5,8 +5,6 @@ import com.alazeprt.iac.ui.WelcomeUI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-
 public class IACreator {
     private static final Logger logger = LoggerFactory.getLogger(IACreator.class.toString());
     public static void main(String[] args) {

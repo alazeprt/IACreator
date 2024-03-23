@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.Arrays;
 
 public class ApplicationConfig {
     private static final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class.toString());

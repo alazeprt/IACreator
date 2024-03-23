@@ -48,9 +48,8 @@ public class ProjectConfig {
             try {
                 Map<String, Object> map = mapper.readValue(file, HashMap.class);
                 Map<String, Object> iacInfo = (Map<String, Object>) map.get("iacinfo");
-                Project project = new Project(iacInfo.get("namespace").toString(), Path.of(path),
+                return new Project(iacInfo.get("namespace").toString(), Path.of(path),
                         UUID.fromString(iacInfo.get("uuid").toString()));
-                return project;
             } catch (Exception ignored) { }
         }
         return null;

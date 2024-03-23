@@ -1,43 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="960.0" style="-fx-background-color: #dde6ed;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alazeprt.iac.ui.MainController">
-   <children>
-      <TreeView fx:id="folderTree" layoutY="30.0" prefHeight="610.0" prefWidth="200.0" style="-fx-background-color: #cdd8e0;" />
-      <AnchorPane prefHeight="30.0" prefWidth="280.0" style="-fx-background-color: #cdd8e0;">
-         <children>
-            <ToolBar minHeight="-Infinity" prefHeight="30.0" prefWidth="280.0" style="-fx-background-color: #cdd8e0;">
-              <items>
-                  <MenuButton minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: rgba(0,0,0,0);" text="File">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="New Project" />
-                        <MenuItem mnemonicParsing="false" text="Open..." />
-                        <MenuItem mnemonicParsing="false" text="Save Project" />
-                        <MenuItem mnemonicParsing="false" text="Save Project As..." />
-                        <MenuItem mnemonicParsing="false" text="Close Project" />
-                        <MenuItem mnemonicParsing="false" text="Exit" />
-                     </items></MenuButton>
-                  <MenuButton minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: rgba(0,0,0,0);" text="Edit">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Cut" />
-                        <MenuItem mnemonicParsing="false" text="Copy" />
-                        <MenuItem mnemonicParsing="false" text="Paste" />
-                     </items></MenuButton>
-                  <MenuButton minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: rgba(0,0,0,0);" text="Pack">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Compress Project" />
-                     </items></MenuButton>
-                  <MenuButton minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: rgba(0,0,0,0);" text="Help">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                     </items></MenuButton>
-              </items>
-            </ToolBar>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="280.0" prefHeight="30.0" prefWidth="680.0" style="-fx-background-color: #cdd8e0;" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0"
+            prefWidth="960.0" style="-fx-background-color: #dde6ed;" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alazeprt.iac.ui.MainController">
+   <TreeView fx:id="folderTree" layoutY="30.0" prefHeight="610.0" prefWidth="200.0"
+             style="-fx-background-color: #cdd8e0;"/>
+   <AnchorPane prefHeight="30.0" prefWidth="280.0" style="-fx-background-color: #cdd8e0;">
+      <ToolBar minHeight="-Infinity" prefHeight="30.0" prefWidth="280.0" style="-fx-background-color: #cdd8e0;">
+         <MenuButton minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0"
+                     style="-fx-background-color: rgba(0,0,0,0);" text="File">
+            <items>
+               <MenuItem mnemonicParsing="false" text="New Project"/>
+               <MenuItem mnemonicParsing="false" text="Open..."/>
+               <MenuItem mnemonicParsing="false" text="Save Project"/>
+               <MenuItem mnemonicParsing="false" text="Save Project As..."/>
+               <MenuItem mnemonicParsing="false" text="Close Project"/>
+               <MenuItem mnemonicParsing="false" text="Exit"/>
+            </items>
+         </MenuButton>
+         <MenuButton minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0"
+                     style="-fx-background-color: rgba(0,0,0,0);" text="Edit">
+            <items>
+               <MenuItem mnemonicParsing="false" text="Cut"/>
+               <MenuItem mnemonicParsing="false" text="Copy"/>
+               <MenuItem mnemonicParsing="false" text="Paste"/>
+            </items>
+         </MenuButton>
+         <MenuButton minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0"
+                     style="-fx-background-color: rgba(0,0,0,0);" text="Pack">
+            <items>
+               <MenuItem mnemonicParsing="false" text="Compress Project"/>
+            </items>
+         </MenuButton>
+         <MenuButton minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0"
+                     style="-fx-background-color: rgba(0,0,0,0);" text="Help">
+            <items>
+               <MenuItem mnemonicParsing="false" text="About"/>
+            </items>
+         </MenuButton>
+      </ToolBar>
+   </AnchorPane>
+   <AnchorPane layoutX="280.0" prefHeight="30.0" prefWidth="680.0" style="-fx-background-color: #cdd8e0;"/>
 </AnchorPane>
