@@ -13,41 +13,42 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alazeprt.iac.ui.WelcomeController">
-   <children>
-      <AnchorPane prefHeight="600.0" prefWidth="225.0" style="-fx-background-color: #cdd8e0;">
-         <children>
-            <ImageView fx:id="iacIcon" fitHeight="64.0" fitWidth="64.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
-            <Label layoutX="107.0" layoutY="29.0" text="IACreator" textFill="#27374d">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="121.0" layoutY="66.0" text="v1.0.0-alpha.1" textFill="#526c80b2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Button layoutX="25.0" layoutY="545.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: #b4c2ce;" text="Settings" />
-            <Button layoutX="25.0" layoutY="485.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: #b4c2ce;" text="Issues Tracker" />
-            <Button layoutX="25.0" layoutY="425.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: #b4c2ce;" text="Github" />
-            <Button layoutX="25.0" layoutY="365.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: #b4c2ce;" text="About" />
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="225.0" prefHeight="60.0" prefWidth="575.0" style="-fx-background-color: #dde6ed;">
-         <children>
-            <Line endX="525.0" layoutX="25.0" layoutY="80.0" stroke="#526d82" />
-            <Button layoutX="40.0" layoutY="37.5" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: rgba(0,0,0,0);" />
-            <ImageView fx:id="searchIcon" fitHeight="25.0" fitWidth="25.0" layoutX="40.0" layoutY="37.5" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" />
-            <TextField layoutX="80.0" layoutY="26.0" prefWidth="250.0" promptText="Search Projects..." style="-fx-background-color: #d5dfe7;" />
-            <Button layoutX="345.0" layoutY="26.0" mnemonicParsing="false" onAction="#onCreateProject" prefHeight="29.0" prefWidth="105.0" style="-fx-background-color: #c4d1da;" text="New Project" />
-            <Button layoutX="465.0" layoutY="26.0" mnemonicParsing="false" onAction="#onOpenProject" prefHeight="29.0" prefWidth="60.0" style="-fx-background-color: #c4d1da;" text="Open" />
-         </children>
-      </AnchorPane>
-      <ScrollPane layoutX="225.0" layoutY="81.0" prefHeight="520.0" prefWidth="575.0" style="-fx-background: #dde6ed; -fx-border-color: #dde6ed;">
-         <content>
-            <AnchorPane fx:id="projectListPane" prefHeight="515.0" prefWidth="565.0" style="-fx-background-color: #dde6ed;" />
-         </content>
-      </ScrollPane>
-   </children>
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.alazeprt.iac.ui.WelcomeController">
+   <AnchorPane prefHeight="600.0" prefWidth="225.0" style="-fx-background-color: #cdd8e0;">
+      <ImageView fx:id="iacIcon" fitHeight="64.0" fitWidth="64.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true"
+                 preserveRatio="true"/>
+      <Label layoutX="107.0" layoutY="29.0" text="IACreator" textFill="#27374d">
+         <font>
+            <Font name="System Bold" size="24.0"/>
+         </font>
+      </Label>
+      <Label layoutX="121.0" layoutY="66.0" text="v1.0.0-alpha.1" textFill="#526c80b2">
+         <font>
+            <Font size="14.0"/>
+         </font>
+      </Label>
+      <Button layoutX="25.0" layoutY="545.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0"
+              style="-fx-background-color: #b4c2ce;" text="Settings"/>
+      <Button layoutX="25.0" layoutY="485.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0"
+              style="-fx-background-color: #b4c2ce;" text="Issues Tracker"/>
+      <Button layoutX="25.0" layoutY="425.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0"
+              style="-fx-background-color: #b4c2ce;" text="Github"/>
+      <Button layoutX="25.0" layoutY="365.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0"
+              style="-fx-background-color: #b4c2ce;" text="About"/>
+   </AnchorPane>
+   <AnchorPane layoutX="225.0" prefHeight="60.0" prefWidth="575.0" style="-fx-background-color: #dde6ed;">
+      <Line endX="525.0" layoutX="25.0" layoutY="80.0" stroke="#526d82"/>
+      <TextField fx:id="projectFilter" layoutX="55.0" layoutY="26.0" prefWidth="250.0"
+                 promptText="Search Projects..." style="-fx-background-color: #d5dfe7;" onKeyTyped="#onSearch"/>
+      <Button layoutX="320.0" layoutY="26.0" mnemonicParsing="false" onAction="#onCreateProject" prefHeight="29.0"
+              prefWidth="105.0" style="-fx-background-color: #c4d1da;" text="New Project"/>
+      <Button layoutX="440.0" layoutY="26.0" mnemonicParsing="false" onAction="#onOpenProject" prefHeight="29.0"
+              prefWidth="60.0" style="-fx-background-color: #c4d1da;" text="Open"/>
+   </AnchorPane>
+   <ScrollPane layoutX="225.0" layoutY="81.0" prefHeight="520.0" prefWidth="575.0"
+               style="-fx-background: #dde6ed; -fx-border-color: #dde6ed;">
+      <AnchorPane fx:id="projectListPane" prefHeight="515.0" prefWidth="565.0"
+                  style="-fx-background-color: #dde6ed;"/>
+   </ScrollPane>
 </AnchorPane>

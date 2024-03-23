@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.URI;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -46,11 +47,17 @@ public class MainController {
                         selectedRoot.getChildren().add(thisItem);
                     }
                 }
+                if(folder.listFiles() == null) {
+                    continue;
+                }
                 for(File file : folder.listFiles()) {
                     if(file.isFile()) {
                         thisItem.getChildren().add(new TreeItem<>(file.getName()));
                     }
                 }
+            }
+            if(folder.listFiles() == null) {
+                continue;
             }
             for (File child : folder.listFiles()) {
                 if (child.isDirectory()) {

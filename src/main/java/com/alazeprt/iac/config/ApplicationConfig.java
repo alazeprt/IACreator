@@ -34,6 +34,18 @@ public class ApplicationConfig {
     }
 
     public static void initializeContent() {
+        List<Project> projects = getProjects();
+        if(projects.isEmpty()) {
+            logger.warn("Didn't found any recent projects!");
+            return;
+        }
+        for (Project project : projects) {
+            ProjectUIController.addProjects(project);
+        }
+    }
+
+    private static List<Project> getProjects() {
+        List<Project> projects = new ArrayList<>();
         logger.info("Getting recent projects...");
         ObjectMapper mapper = new ObjectMapper();
         File config = new File(".iac.json");
@@ -48,13 +60,41 @@ public class ApplicationConfig {
                 logger.debug("Project Information: Namespace: " + record.get("namespace").toString() +
                         ", Path: " + record.get("path").toString() +
                         ", UUID: " + record.get("uuid").toString());
-                Project project = new Project(record.get("namespace").toString(),
-                        Path.of(record.get("path").toString()), UUID.fromString(record.get("uuid").toString()));
-                ProjectUIController.addRecentProjects(project);
+                projects.add(new Project(record.get("namespace").toString(),
+                        Path.of(record.get("path").toString()), UUID.fromString(record.get("uuid").toString())));
             }
         } catch (Exception e) {
             logger.debug("Failed to get recent projects: " + e);
         }
+        return projects;
+    }
+
+    public static List<Project> getProjects(String filter) {
+        List<Project> projects = new ArrayList<>();
+        logger.info("Getting recent projects with filter...");
+        ObjectMapper mapper = new ObjectMapper();
+        File config = new File(".iac.json");
+        if(!config.exists()) {
+            saveDefaultConfig();
+        }
+        try {
+            Map<String, Object> map = mapper.readValue(config, HashMap.class);
+            List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("recents");
+            for(Map<String, Object> record : list) {
+                logger.info("Got project: " + record.get("namespace").toString());
+                logger.debug("Project Information: Namespace: " + record.get("namespace").toString() +
+                        ", Path: " + record.get("path").toString() +
+                        ", UUID: " + record.get("uuid").toString());
+                if(record.get("namespace").toString().contains(filter) || record.get("path").toString().contains(filter)) {
+                    logger.debug("Filter matched: " + record.get("namespace").toString() + " | " + record.get("path").toString());
+                    projects.add(new Project(record.get("namespace").toString(),
+                            Path.of(record.get("path").toString()), UUID.fromString(record.get("uuid").toString())));
+                }
+            }
+        } catch (Exception e) {
+            logger.debug("Failed to get recent projects: " + e);
+        }
+        return projects;
     }
 
     private static void saveDefaultConfig() {

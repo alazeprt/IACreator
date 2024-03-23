@@ -9,11 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
@@ -41,7 +39,7 @@ public class ProjectUIController {
 
     private static AnchorPane projectListPane;
 
-    private static int projectCount = 0;
+    protected static int projectCount = 0;
 
     @FXML
     private TextField folder;
@@ -80,7 +78,7 @@ public class ProjectUIController {
         }
         Project project = new Project(namespace.getText(), Path.of(folder.getText()));
         ApplicationConfig.writeRecentContent(project);
-        addRecentProjects(project);
+        addProjects(project);
         ProjectConfig.create(project);
         MainUI.showMainStage(folder.getText());
         Project.closeCreateStage();
@@ -125,7 +123,7 @@ public class ProjectUIController {
         }
     }
 
-    public static void addRecentProjects(Project project) {
+    public static void addProjects(Project project) {
         logger.info("Adding recent project to welcome page: " + project.getNamespace());
         if(projectCount > 4) {
             int addHeight = 105 + 120 * (projectCount - 5);
@@ -150,6 +148,14 @@ public class ProjectUIController {
         projectPath.setTextFill(Paint.valueOf("#9db2bf"));
         projectPath.setMaxWidth(450);
         anchorPane.getChildren().add(projectPath);
+        anchorPane.setOnMouseClicked(event -> {
+            try {
+                WelcomeController.openProject(project);
+            } catch (IOException e) {
+                logger.error("Failed to open project: " + e);
+                e.printStackTrace();
+            }
+        });
         projectListPane.getChildren().add(anchorPane);
         projectCount++;
     }
