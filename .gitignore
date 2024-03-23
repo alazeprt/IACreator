@@ -40,3 +40,4 @@ bin/
 
 ### Application File ###
 /.iac.json
+/iac_logs/

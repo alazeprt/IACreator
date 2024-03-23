@@ -16,6 +16,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +25,8 @@ import java.nio.file.Path;
 import java.util.regex.Pattern;
 
 public class ProjectUIController {
+    private static final Logger logger = LoggerFactory.getLogger(ProjectUIController.class.toString());
+
     @FXML
     private ImageView folderIcon;
 
@@ -52,6 +56,7 @@ public class ProjectUIController {
     }
 
     public void create() throws IOException {
+        logger.info("Creating new project...");
         if(nameError.isVisible()) {
             return;
         }
@@ -70,9 +75,6 @@ public class ProjectUIController {
             }, () -> locationWarn.setVisible(true));
         }
         Path path = Path.of(folder.getText());
-        if(path.toFile().exists()) {
-
-        }
         if(!path.toFile().exists() || !path.toFile().isDirectory()) {
             path.toFile().mkdirs();
         }
@@ -86,10 +88,12 @@ public class ProjectUIController {
     }
 
     public void cancel() {
+        logger.info("Cancelling project creation...");
         Project.closeCreateStage();
     }
 
     public void openFolderChooser() {
+        logger.info("Opening project's folder chooser stage...");
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Choose a folder...");
         File file = chooser.showDialog(new Stage());
@@ -122,6 +126,7 @@ public class ProjectUIController {
     }
 
     public static void addRecentProjects(Project project) {
+        logger.info("Adding recent project to welcome page: " + project.getNamespace());
         if(projectCount > 4) {
             int addHeight = 105 + 120 * (projectCount - 5);
             projectListPane.setPrefHeight(projectListPane.getPrefHeight() + addHeight);

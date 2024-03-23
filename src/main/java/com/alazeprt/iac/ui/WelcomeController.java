@@ -9,12 +9,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
 public class WelcomeController {
+    private static final Logger logger = LoggerFactory.getLogger(WelcomeController.class.toString());
+
     @FXML
     private ImageView iacIcon;
 
@@ -32,14 +36,17 @@ public class WelcomeController {
     }
 
     public void onCreateProject() throws IOException {
+        logger.info("Opening new project creation stage...");
         Project.showCreateStage();
     }
 
     public void onOpenProject() throws IOException {
+        logger.info("Opening project chooser stage...");
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Choose a folder...");
         File file = chooser.showDialog(new Stage());
         if(file != null) {
+            logger.info("Opening project: " + file.getAbsolutePath());
             Project project = ProjectConfig.getProject(file.getAbsolutePath());
             if(project == null) {
                 project = new Project(file.getName(), Path.of(file.getAbsolutePath()));

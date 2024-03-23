@@ -3,6 +3,8 @@ package com.alazeprt.iac.config;
 import com.alazeprt.iac.ui.ProjectUIController;
 import com.alazeprt.iac.utils.Project;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,19 +13,19 @@ import java.util.*;
 import java.util.Arrays;
 
 public class ApplicationConfig {
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationConfig.class.toString());
     public static void initialize() {
+        logger.info("Initial application configuration...");
         ObjectMapper mapper = new ObjectMapper();
         File config = new File(".iac.json");
         if(config.exists()) {
+            logger.debug("Reading application configuration...");
             try {
                 Map<String, Object> map = mapper.readValue(config, HashMap.class);
-                List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("recents");
-                for(Map<String, Object> record : list) {
-                    Project project = new Project(record.get("namespace").toString(),
-                            Path.of(record.get("path").toString()), UUID.fromString(record.get("uuid").toString()));
-                }
+                String version = map.get("version").toString();
+                logger.debug("Application configuration version: " + version);
             } catch (Exception e) {
-                System.out.println(e);
+                logger.debug("Failed to read application configuration: " + e);
                 saveDefaultConfig();
             }
         } else {
@@ -32,29 +34,37 @@ public class ApplicationConfig {
     }
 
     public static void initializeContent() {
+        logger.info("Getting recent projects...");
         ObjectMapper mapper = new ObjectMapper();
         File config = new File(".iac.json");
+        if(!config.exists()) {
+            saveDefaultConfig();
+        }
         try {
             Map<String, Object> map = mapper.readValue(config, HashMap.class);
             List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("recents");
             for(Map<String, Object> record : list) {
-                System.out.println(record.get("namespace").toString());
+                logger.info("Got project: " + record.get("namespace").toString());
+                logger.debug("Project Information: Namespace: " + record.get("namespace").toString() +
+                        ", Path: " + record.get("path").toString() +
+                        ", UUID: " + record.get("uuid").toString());
                 Project project = new Project(record.get("namespace").toString(),
                         Path.of(record.get("path").toString()), UUID.fromString(record.get("uuid").toString()));
                 ProjectUIController.addRecentProjects(project);
             }
         } catch (Exception e) {
-            System.out.println(e);
-            saveDefaultConfig();
+            logger.debug("Failed to get recent projects: " + e);
         }
     }
 
     private static void saveDefaultConfig() {
+        logger.info("Creating default application configuration...");
         ObjectMapper mapper = new ObjectMapper();
         File config = new File(".iac.json");
         try {
             mapper.writeValue(config, Map.of("version", "1.0.0-alpha.1"));
         } catch (IOException e) {
+            logger.warn("Failed to create default application configuration: " + e);
             e.printStackTrace();
         }
     }
