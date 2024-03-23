@@ -10,8 +10,8 @@ import java.io.IOException;
 
 public class MainUI {
     private static Stage mainStage;
-    public static String path = "";
-    public static void showMainStage(String folder) throws IOException {
+    protected static String path = "";
+    protected static void showMainStage(String folder) throws IOException {
         if(mainStage != null) {
             if(!mainStage.isShowing()) {
                 path = folder;
@@ -35,7 +35,7 @@ public class MainUI {
         mainStage = projectStage;
     }
 
-    public static void closeMainStage() {
+    protected static void closeMainStage() {
         mainStage.close();
         mainStage = null;
         path = "";

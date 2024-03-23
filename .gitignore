@@ -39,4 +39,4 @@ bin/
 .DS_Store
 
 ### Application File ###
-/iac.json
+/.iac.json

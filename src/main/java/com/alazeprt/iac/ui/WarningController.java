@@ -18,7 +18,7 @@ public class WarningController {
         closeCreateStage(false);
     }
 
-    public void closeCreateStage(boolean runTask) {
+    private void closeCreateStage(boolean runTask) {
         warningStage.close();
         warningStage = null;
         if (runTask) {

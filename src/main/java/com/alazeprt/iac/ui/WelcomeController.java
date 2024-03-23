@@ -16,13 +16,13 @@ import java.nio.file.Path;
 
 public class WelcomeController {
     @FXML
-    public ImageView iacIcon;
+    private ImageView iacIcon;
 
     @FXML
-    public ImageView searchIcon;
+    private ImageView searchIcon;
 
     @FXML
-    public AnchorPane projectListPane;
+    private AnchorPane projectListPane;
 
     public void initialize() {
         iacIcon.setImage(new Image(WelcomeController.class.getResource("image/icon.png").toString()));

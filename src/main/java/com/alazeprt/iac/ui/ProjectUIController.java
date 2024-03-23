@@ -24,29 +24,30 @@ import java.util.regex.Pattern;
 
 public class ProjectUIController {
     @FXML
-    public ImageView folderIcon;
+    private ImageView folderIcon;
 
     @FXML
-    public Label nameError;
+    private Label nameError;
 
     @FXML
-    public Label locationWarn;
+    private Label locationWarn;
 
     @FXML
-    public TextField namespace;
+    private TextField namespace;
 
-    public static AnchorPane projectListPane;
+    private static AnchorPane projectListPane;
+
     private static int projectCount = 0;
 
     @FXML
-    public TextField folder;
+    private TextField folder;
 
     public void initialize() {
         folderIcon.setImage(new Image(ProjectUIController.class.getResource("image/folder.png").toString()));
         nameError.setVisible(true);
     }
 
-    public static void injectProjectListPane(AnchorPane anchorPane) {
+    protected static void injectProjectListPane(AnchorPane anchorPane) {
         projectListPane = anchorPane;
     }
 

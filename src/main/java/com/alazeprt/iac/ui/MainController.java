@@ -11,24 +11,15 @@ import java.util.Queue;
 
 public class MainController {
     @FXML
-    public TreeView<String> folderTree;
+    private TreeView<String> folderTree;
 
     private void generateTreeView(File dirPath) {
         TreeItem<String> root = new TreeItem<>(dirPath.getName());
-
-        // 创建队列
         Queue<File> queue = new LinkedList<>();
-
-        // 将根文件夹入队
         queue.offer(dirPath);
-
-        // 循环遍历队列
         while (!queue.isEmpty()) {
-            // 从队列中取出队首元素
             File folder = queue.poll();
             String relativePath = toRelativePath(folder, dirPath);
-            // 访问队首元素
-            System.out.println(relativePath);
             TreeItem<String> selectedRoot = root;
             for(int i = 0; i < relativePath.split("/").length; i++) {
                 if(relativePath.isEmpty()) {
@@ -57,8 +48,6 @@ public class MainController {
                     }
                 }
             }
-            System.out.println(3);
-            // 将队首元素的所有子文件夹入队
             for (File child : folder.listFiles()) {
                 if (child.isDirectory()) {
                     queue.offer(child);
@@ -74,18 +63,9 @@ public class MainController {
     }
 
     private String toRelativePath(File path, File root) {
-        //将绝对路径转换为URI
         URI path1 = path.toURI();
         URI path2 = root.toURI();
-
-        //从两个路径创建相对路径
         URI relativePath = path2.relativize(path1);
-
-        //将URI转换为字符串
         return relativePath.getPath();
     }
-
-//    public static void main(String[] args) {
-//        generateTreeView(new File("."));
-//    }
 }

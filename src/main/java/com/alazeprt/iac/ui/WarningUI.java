@@ -8,10 +8,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class WarningUI {
-    static Stage warningStage;
-    static String message;
-    static Runnable continueTask;
-    static Runnable cancelTask;
+    protected static Stage warningStage;
+    protected static String message;
+    protected static Runnable continueTask;
+    private static Runnable cancelTask;
 
     public static void showWarningStage(String message, Runnable continueTask, Runnable cancelTask) throws IOException {
         WarningUI.message = message;

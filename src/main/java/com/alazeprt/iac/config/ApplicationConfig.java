@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class ApplicationConfig {
     public static void initialize() {
         ObjectMapper mapper = new ObjectMapper();
-        File config = new File("iac.json");
+        File config = new File(".iac.json");
         if(config.exists()) {
             try {
                 Map<String, Object> map = mapper.readValue(config, HashMap.class);
@@ -33,7 +33,7 @@ public class ApplicationConfig {
 
     public static void initializeContent() {
         ObjectMapper mapper = new ObjectMapper();
-        File config = new File("iac.json");
+        File config = new File(".iac.json");
         try {
             Map<String, Object> map = mapper.readValue(config, HashMap.class);
             List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("recents");
@@ -49,9 +49,9 @@ public class ApplicationConfig {
         }
     }
 
-    public static void saveDefaultConfig() {
+    private static void saveDefaultConfig() {
         ObjectMapper mapper = new ObjectMapper();
-        File config = new File("iac.json");
+        File config = new File(".iac.json");
         try {
             mapper.writeValue(config, Map.of("version", "1.0.0-alpha.1"));
         } catch (IOException e) {
@@ -61,7 +61,7 @@ public class ApplicationConfig {
 
     public static void writeRecentContent(Project... recentProjects) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.readValue(new File("iac.json"), HashMap.class);
+        Map<String, Object> map = mapper.readValue(new File(".iac.json"), HashMap.class);
         List<Project> recentProjectList = Arrays.asList(recentProjects);
         if(map.getOrDefault("recents", "").equals("")) {
             map.put("recents", recentProjectList);
@@ -70,20 +70,20 @@ public class ApplicationConfig {
             configRecentProjectList.addAll(recentProjectList);
             map.put("recents", configRecentProjectList);
         }
-        mapper.writeValue(new File("iac.json"), map);
+        mapper.writeValue(new File(".iac.json"), map);
     }
 
     public static void unwriteRecentContent(UUID uuid) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.readValue(new File("iac.json"), HashMap.class);
+        Map<String, Object> map = mapper.readValue(new File(".iac.json"), HashMap.class);
         ((List<LinkedHashMap<String, Object>>) map.get("recents"))
                 .removeIf(recentProject -> recentProject.get("uuid").equals(uuid));
-        mapper.writeValue(new File("iac.json"), map);
+        mapper.writeValue(new File(".iac.json"), map);
     }
 
     public static boolean existRecentProject(Project project) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.readValue(new File("iac.json"), HashMap.class);
+        Map<String, Object> map = mapper.readValue(new File(".iac.json"), HashMap.class);
         if(map.get("recents") == null) {
             return false;
         }
