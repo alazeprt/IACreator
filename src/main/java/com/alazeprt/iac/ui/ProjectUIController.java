@@ -149,23 +149,6 @@ public class ProjectUIController {
         removeImage.setFitHeight(30);
         anchorPane.getChildren().add(removeImage);
         removeImage.setMouseTransparent(true);
-        Button removeButton = getButton(project);
-        anchorPane.getChildren().add(removeButton);
-        anchorPane.setOnMouseClicked(event -> {
-            if(event.getX() >= 480 && event.getX() <= 510 && event.getY() >= 35 && event.getY() <= 65) {
-                return;
-            }
-            try {
-                WelcomeController.openProject(project);
-            } catch (IOException e) {
-                logger.error("Failed to open project: " + e);
-            }
-        });
-        projectListPane.getChildren().add(anchorPane);
-        projectCount++;
-    }
-
-    private static Button getButton(Project project) {
         Button removeButton = new Button();
         removeButton.setStyle("-fx-background-color: rgba(0,0,0,0)");
         removeButton.setLayoutX(480);
@@ -188,6 +171,18 @@ public class ProjectUIController {
                 ProjectUIController.addProjects(project2);
             }
         });
-        return removeButton;
+        anchorPane.getChildren().add(removeButton);
+        anchorPane.setOnMouseClicked(event -> {
+            if(event.getX() >= 480 && event.getX() <= 510 && event.getY() >= 35 && event.getY() <= 65) {
+                return;
+            }
+            try {
+                WelcomeController.openProject(project);
+            } catch (IOException e) {
+                logger.error("Failed to open project: " + e);
+            }
+        });
+        projectListPane.getChildren().add(anchorPane);
+        projectCount++;
     }
 }
