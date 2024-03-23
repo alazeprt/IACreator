@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -41,7 +40,6 @@ public class WelcomeController {
         chooser.setTitle("Choose a folder...");
         File file = chooser.showDialog(new Stage());
         if(file != null) {
-            // TODO: get project information
             Project project = ProjectConfig.getProject(file.getAbsolutePath());
             if(project == null) {
                 project = new Project(file.getName(), Path.of(file.getAbsolutePath()));

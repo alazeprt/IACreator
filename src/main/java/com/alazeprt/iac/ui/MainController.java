@@ -3,48 +3,89 @@ package com.alazeprt.iac.ui;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.input.MouseButton;
 
 import java.io.File;
+import java.net.URI;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class MainController {
     @FXML
     public TreeView<String> folderTree;
-    private void generateTreeView(File directory) {
-        TreeItem<String> rootItem = new TreeItem<>(directory.getName());
-        folderTree.setRoot(rootItem);
-        folderTree.getStylesheets().add("css/treeview.css");
 
-        for (File file : directory.listFiles()) {
-            if (file.isDirectory()) {
-                TreeItem<String> childItem = new TreeItem<>(file.getName());
-                rootItem.getChildren().add(childItem);
+    private void generateTreeView(File dirPath) {
+        TreeItem<String> root = new TreeItem<>(dirPath.getName());
 
-                generateTreeView(file);
-            } else {
-                TreeItem<String> childItem = new TreeItem<>(file.getName());
-                childItem.setValue(file.getAbsolutePath());
-                rootItem.getChildren().add(childItem);
+        // 创建队列
+        Queue<File> queue = new LinkedList<>();
+
+        // 将根文件夹入队
+        queue.offer(dirPath);
+
+        // 循环遍历队列
+        while (!queue.isEmpty()) {
+            // 从队列中取出队首元素
+            File folder = queue.poll();
+            String relativePath = toRelativePath(folder, dirPath);
+            // 访问队首元素
+            System.out.println(relativePath);
+            TreeItem<String> selectedRoot = root;
+            for(int i = 0; i < relativePath.split("/").length; i++) {
+                if(relativePath.isEmpty()) {
+                    break;
+                }
+                String name = relativePath.split("/")[i];
+                TreeItem<String> thisItem = new TreeItem<>(name);
+                if(i == relativePath.split("/").length - 1) {
+                    selectedRoot.getChildren().add(thisItem);
+                } else {
+                    boolean changed = false;
+                    for(TreeItem<String> treeItem : selectedRoot.getChildren()) {
+                        if(treeItem.getValue().equals(name)) {
+                            selectedRoot = treeItem;
+                            changed = true;
+                            break;
+                        }
+                    }
+                    if(!changed) {
+                        selectedRoot.getChildren().add(thisItem);
+                    }
+                }
+                for(File file : folder.listFiles()) {
+                    if(file.isFile()) {
+                        thisItem.getChildren().add(new TreeItem<>(file.getName()));
+                    }
+                }
+            }
+            System.out.println(3);
+            // 将队首元素的所有子文件夹入队
+            for (File child : folder.listFiles()) {
+                if (child.isDirectory()) {
+                    queue.offer(child);
+                }
             }
         }
 
-        // 展开所有节点
-        folderTree.getRoot().setExpanded(true);
-
-        // 添加双击事件处理
-        folderTree.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-                TreeItem<String> selectedItem = folderTree.getSelectionModel().getSelectedItem();
-
-                if (selectedItem != null && selectedItem.getValue() != null) {
-                    // 打开文件
-                    System.out.println("打开文件：" + selectedItem.getValue());
-                }
-            }
-        });
+        folderTree.setRoot(root);
     }
 
     public void initialize() {
         generateTreeView(new File(MainUI.path));
     }
+
+    private String toRelativePath(File path, File root) {
+        //将绝对路径转换为URI
+        URI path1 = path.toURI();
+        URI path2 = root.toURI();
+
+        //从两个路径创建相对路径
+        URI relativePath = path2.relativize(path1);
+
+        //将URI转换为字符串
+        return relativePath.getPath();
+    }
+
+//    public static void main(String[] args) {
+//        generateTreeView(new File("."));
+//    }
 }

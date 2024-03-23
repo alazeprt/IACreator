@@ -76,7 +76,6 @@ public class ProjectUIController {
             path.toFile().mkdirs();
         }
         Project project = new Project(namespace.getText(), Path.of(folder.getText()));
-        // TODO: open a new stage & save recent history
         ApplicationConfig.writeRecentContent(project);
         addRecentProjects(project);
         ProjectConfig.create(project);
