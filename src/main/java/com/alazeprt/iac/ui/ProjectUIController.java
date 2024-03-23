@@ -4,6 +4,7 @@ import com.alazeprt.iac.config.ApplicationConfig;
 import com.alazeprt.iac.config.ProjectConfig;
 import com.alazeprt.iac.utils.Project;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -20,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class ProjectUIController {
@@ -148,7 +150,40 @@ public class ProjectUIController {
         projectPath.setTextFill(Paint.valueOf("#9db2bf"));
         projectPath.setMaxWidth(450);
         anchorPane.getChildren().add(projectPath);
+        ImageView removeImage = new ImageView(new Image(ProjectUIController.class.getResource("image/remove.png").toString()));
+        removeImage.setLayoutX(480);
+        removeImage.setLayoutY(35);
+        removeImage.setFitWidth(30);
+        removeImage.setFitHeight(30);
+        anchorPane.getChildren().add(removeImage);
+        removeImage.setMouseTransparent(true);
+        Button removeButton = new Button();
+        removeButton.setStyle("-fx-background-color: rgba(0,0,0,0)");
+        removeButton.setLayoutX(480);
+        removeButton.setLayoutY(35);
+        removeButton.setPrefWidth(30);
+        removeButton.setPrefHeight(30);
+        removeButton.setOnAction(actionEvent -> {
+            logger.info("Removing recent project from welcome page: " + project.getNamespace());
+            try {
+                ApplicationConfig.unwriteRecentContent(project.getUuid());
+            } catch (IOException e) {
+                logger.error("Failed to remove recent project from configuration: " + e);
+                return;
+            }
+            projectListPane.getChildren().clear();
+            projectListPane.setPrefHeight(515);
+            List<Project> projectList = ApplicationConfig.getProjects("");
+            projectCount = 0;
+            for(Project project2 : projectList) {
+                ProjectUIController.addProjects(project2);
+            }
+        });
+        anchorPane.getChildren().add(removeButton);
         anchorPane.setOnMouseClicked(event -> {
+            if(event.getX() >= 480 && event.getX() <= 510 && event.getY() >= 35 && event.getY() <= 65) {
+                return;
+            }
             try {
                 WelcomeController.openProject(project);
             } catch (IOException e) {

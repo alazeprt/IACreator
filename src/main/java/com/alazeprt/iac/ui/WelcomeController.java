@@ -74,7 +74,6 @@ public class WelcomeController {
     public void onSearch() {
         projectListPane.getChildren().clear();
         projectListPane.setPrefHeight(515);
-        System.out.println(projectListPane.getHeight());
         List<Project> projectList = ApplicationConfig.getProjects(projectFilter.getText());
         projectCount = 0;
         for(Project project : projectList) {

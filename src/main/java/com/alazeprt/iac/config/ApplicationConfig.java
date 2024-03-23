@@ -105,7 +105,6 @@ public class ApplicationConfig {
             mapper.writeValue(config, Map.of("version", "1.0.0-alpha.1"));
         } catch (IOException e) {
             logger.warn("Failed to create default application configuration: " + e);
-            e.printStackTrace();
         }
     }
 
@@ -127,7 +126,7 @@ public class ApplicationConfig {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = mapper.readValue(new File(".iac.json"), HashMap.class);
         ((List<LinkedHashMap<String, Object>>) map.get("recents"))
-                .removeIf(recentProject -> recentProject.get("uuid").equals(uuid));
+                .removeIf(recentProject -> recentProject.get("uuid").toString().equals(uuid.toString()));
         mapper.writeValue(new File(".iac.json"), map);
     }
 
