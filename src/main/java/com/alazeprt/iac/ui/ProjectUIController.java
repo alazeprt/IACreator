@@ -82,7 +82,7 @@ public class ProjectUIController {
         ApplicationConfig.writeRecentContent(project);
         addProjects(project);
         ProjectConfig.create(project);
-        MainUI.showMainStage(folder.getText());
+        MainUI.showMainStage(folder.getText(), project.getNamespace());
         Project.closeCreateStage();
         WelcomeUI.closeWelcomeStage();
     }

@@ -28,7 +28,7 @@
       <Button layoutX="25.0" layoutY="425.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0"
               style="-fx-background-color: #b4c2ce;" text="Github"/>
       <Button layoutX="25.0" layoutY="365.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="175.0"
-              style="-fx-background-color: #b4c2ce;" text="About"/>
+              style="-fx-background-color: #b4c2ce;" text="About" onAction="#onViewAbout"/>
    </AnchorPane>
    <AnchorPane layoutX="225.0" prefHeight="60.0" prefWidth="575.0" style="-fx-background-color: #dde6ed;">
       <Line endX="525.0" layoutX="25.0" layoutY="80.0" stroke="#526d82"/>

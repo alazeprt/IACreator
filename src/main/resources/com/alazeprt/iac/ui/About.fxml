@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0"
+            prefWidth="300.0" style="-fx-background-color: #cdd8e0;" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alazeprt.iac.ui.AboutUIController">
+   <Label layoutX="14.0" layoutY="14.0" text="About" textFill="#27374d">
+      <font>
+         <Font name="System Bold" size="24.0"/>
+      </font>
+   </Label>
+   <Button layoutX="244.0" layoutY="157.0" mnemonicParsing="false" onAction="#exitAction"
+           style="-fx-background-color: #9DB2BF;" text="Exit"/>
+   <Label layoutX="14.0" layoutY="47.0" text="Name: IACreator" textFill="#27374d"/>
+   <Label layoutX="14.0" layoutY="66.0" text="Version: 1.0.0-alpha.1" textFill="#27374d"/>
+   <Label layoutX="14.0" layoutY="85.0" text="Author: alazeprt" textFill="#27374d"/>
+   <Label layoutX="14.0" layoutY="104.0" prefHeight="40.0" prefWidth="247.0"
+          text="Description: A software for creating ItemsAdder addons" textFill="#27374d" wrapText="true"/>
+   <Hyperlink layoutX="10.0" layoutY="138.0" prefHeight="51.0" prefWidth="208.0"
+              text="https://github.com/alazeprt/IACreator" wrapText="true"/>
+</AnchorPane>

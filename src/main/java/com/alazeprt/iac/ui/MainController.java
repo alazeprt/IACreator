@@ -1,8 +1,10 @@
 package com.alazeprt.iac.ui;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.layout.AnchorPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,13 @@ import java.util.Queue;
 
 public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class.toString());
+
+    @FXML
+    private SplitPane splitPane;
+
+    @FXML
+    private AnchorPane objectsPane;
+
     @FXML
     private TreeView<String> folderTree;
 
@@ -70,6 +79,7 @@ public class MainController {
 
     public void initialize() {
         generateTreeView(new File(MainUI.path));
+        splitPane.getStylesheets().add(MainUI.class.getResource("style/MainPage.css").toString());
     }
 
     private String toRelativePath(File path, File root) {

@@ -13,25 +13,25 @@ public class MainUI {
     private static final Logger logger = LoggerFactory.getLogger(MainUI.class.toString());
     private static Stage mainStage;
     protected static String path = "";
-    protected static void showMainStage(String folder) throws IOException {
+    protected static void showMainStage(String folder, String projectName) throws IOException {
         if(mainStage != null) {
             if(!mainStage.isShowing()) {
                 path = folder;
-                showMainStageHandler();
+                showMainStageHandler(projectName);
             }
             mainStage.setAlwaysOnTop(true);
         } else {
             path = folder;
-            showMainStageHandler();
+            showMainStageHandler(projectName);
         }
     }
 
-    private static void showMainStageHandler() throws IOException {
+    private static void showMainStageHandler(String projectName) throws IOException {
         logger.info("Opening main page...");
         Stage projectStage = new Stage();
         Parent root = FXMLLoader.load(MainUI.class.getResource("MainPage.fxml"));
         Scene scene = new Scene(root, 960, 640);
-        projectStage.setTitle("Project - ");
+        projectStage.setTitle("Project - " + projectName);
         projectStage.setScene(scene);
         projectStage.setResizable(false);
         projectStage.show();

@@ -3,6 +3,7 @@ package com.alazeprt.iac.ui;
 import com.alazeprt.iac.config.ApplicationConfig;
 import com.alazeprt.iac.config.ProjectConfig;
 import com.alazeprt.iac.utils.Project;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -32,6 +33,12 @@ public class WelcomeController {
     @FXML
     private AnchorPane projectListPane;
 
+    public static void openProject(Project project) throws IOException {
+        logger.info("Opening project: " + project.getNamespace());
+        MainUI.showMainStage(project.getPath().toString(), project.getNamespace());
+        WelcomeUI.closeWelcomeStage();
+    }
+
     public void initialize() {
         iacIcon.setImage(new Image(WelcomeController.class.getResource("image/icon.png").toString()));
         ProjectUIController.injectProjectListPane(projectListPane);
@@ -48,27 +55,21 @@ public class WelcomeController {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Choose a folder...");
         File file = chooser.showDialog(new Stage());
-        if(file != null) {
+        if (file != null) {
             logger.info("Opening project: " + file.getAbsolutePath());
             Project project = ProjectConfig.getProject(file.getAbsolutePath());
-            if(project == null) {
+            if (project == null) {
                 project = new Project(file.getName(), Path.of(file.getAbsolutePath()));
                 ProjectConfig.create(project);
                 ApplicationConfig.writeRecentContent(project);
-            } else if(!ApplicationConfig.existRecentProject(project)) {
+            } else if (!ApplicationConfig.existRecentProject(project)) {
                 System.out.println(2);
                 ApplicationConfig.writeRecentContent(project);
             }
-            MainUI.showMainStage(file.getAbsolutePath());
+            MainUI.showMainStage(file.getAbsolutePath(), project.getNamespace());
             ProjectUIController.addProjects(project);
             WelcomeUI.closeWelcomeStage();
         }
-    }
-
-    public static void openProject(Project project) throws IOException {
-        logger.info("Opening project: " + project.getNamespace());
-        MainUI.showMainStage(project.getPath().toString());
-        WelcomeUI.closeWelcomeStage();
     }
 
     public void onSearch() {
@@ -76,8 +77,13 @@ public class WelcomeController {
         projectListPane.setPrefHeight(515);
         List<Project> projectList = ApplicationConfig.getProjects(projectFilter.getText());
         projectCount = 0;
-        for(Project project : projectList) {
+        for (Project project : projectList) {
             ProjectUIController.addProjects(project);
         }
+    }
+
+    public void onViewAbout() throws IOException {
+        logger.info("Opening About stage...");
+        AboutUIController.showAboutStage();
     }
 }
