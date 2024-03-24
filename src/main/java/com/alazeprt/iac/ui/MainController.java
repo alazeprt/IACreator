@@ -1,6 +1,9 @@
 package com.alazeprt.iac.ui;
 
+import com.alazeprt.iac.utils.Project;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -9,12 +12,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class.toString());
+
+    @FXML
+    private MenuItem functionCopy;
+
+    @FXML
+    private MenuItem functionPaste;
+
+    @FXML
+    private MenuItem functionCut;
 
     @FXML
     private SplitPane splitPane;
@@ -87,5 +100,19 @@ public class MainController {
         URI path2 = root.toURI();
         URI relativePath = path2.relativize(path1);
         return relativePath.getPath();
+    }
+
+    public void onExit() {
+        System.exit(0);
+    }
+
+    public void onCloseProject() throws IOException {
+        ProjectUIController.projectCount = 0;
+        MainUI.closeMainStage();
+        WelcomeUI.start();
+    }
+
+    public void onCreateProject() throws IOException {
+        Project.showCreateStage();
     }
 }

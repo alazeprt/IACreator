@@ -32,6 +32,19 @@ public class WelcomeUI extends Application {
         stage = primaryStage;
     }
 
+    public static void start() throws IOException {
+        Stage primaryStage = new Stage();
+        logger.info("Loading welcome page...");
+        Parent root = FXMLLoader.load(WelcomeUI.class.getResource("WelcomePage.fxml"));
+        Scene scene = new Scene(root, 800, 600);
+        primaryStage.getIcons().add(new Image(WelcomeUI.class.getResource("image/icon.png").toString()));
+        primaryStage.setTitle("IACreator");
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
+        primaryStage.show();
+        stage = primaryStage;
+    }
+
     public static void closeWelcomeStage() {
         stage.close();
     }

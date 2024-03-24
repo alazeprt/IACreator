@@ -19,8 +19,11 @@ public class MainUI {
             if(!mainStage.isShowing()) {
                 path = folder;
                 showMainStageHandler(projectName);
+            } else {
+                mainStage.close();
+                path = folder;
+                showMainStageHandler(projectName);
             }
-            mainStage.setAlwaysOnTop(true);
         } else {
             path = folder;
             showMainStageHandler(projectName);
