@@ -17,7 +17,7 @@ before_script:
 
 build:
   stage: build
-  script: gradle build
+  script: gradle build jlink
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
@@ -27,23 +27,7 @@ build:
   artifacts:
     name: "Artifacts"
     paths:
-      - build/libs/*.jar
-    expire_in: 7 days
-    when: always
-
-jlink: 
-  stage: jlink
-  script: gradle jlink
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: push
-    paths:
-      - build
-      - .gradle
-  artifacts:
-    name: "Artifacts"
-    paths:
-      - build/jlink/*
+      - build/
     expire_in: 7 days
     when: always
 
