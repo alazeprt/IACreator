@@ -31,6 +31,22 @@ build:
     expire_in: 7 days
     when: always
 
+jlink: 
+  stage: jlink
+  script: gradle jlink
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+      - .gradle
+  artifacts:
+    name: "Artifacts"
+    paths:
+      - build/jlink/*
+    expire_in: 7 days
+    when: always
+
 test:
   stage: test
   script: gradle check
