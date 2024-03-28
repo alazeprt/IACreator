@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("application")
     id("org.openjfx.javafxplugin") version "0.1.0"
+    id("org.beryx.jlink") version "3.0.1"
 }
 
 group = "com.alazeprt.iac"
@@ -34,4 +35,11 @@ application {
 
 tasks.withType(JavaCompile::class) {
     options.encoding = "UTF-8"
+}
+
+jlink {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'IACreator'
+    }
 }
