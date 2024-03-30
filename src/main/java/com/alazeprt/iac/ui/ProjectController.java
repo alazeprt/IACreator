@@ -3,7 +3,6 @@ package com.alazeprt.iac.ui;
 import com.alazeprt.iac.config.ApplicationConfig;
 import com.alazeprt.iac.config.ProjectConfig;
 import com.alazeprt.iac.utils.Project;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
@@ -16,13 +15,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class MainController {
+public class ProjectController {
 
     @FXML
     private MenuItem functionCopy;
@@ -96,8 +94,8 @@ public class MainController {
     }
 
     public void initialize() {
-        generateTreeView(new File(MainUI.path));
-        splitPane.getStylesheets().add(MainUI.class.getResource("style/MainPage.css").toString());
+        generateTreeView(new File(ProjectUI.path));
+        splitPane.getStylesheets().add(ProjectUI.class.getResource("style/MainPage.css").toString());
     }
 
     private String toRelativePath(File path, File root) {
@@ -113,8 +111,8 @@ public class MainController {
 
     public void onCloseProject() {
         logger.info("Closing project...");
-        ProjectUIController.projectCount = 0;
-        MainUI.closeMainStage();
+        CreateProjectController.projectCount = 0;
+        ProjectUI.closeMainStage();
         WelcomeUI.start();
     }
 
@@ -135,8 +133,8 @@ public class MainController {
             } else if (!ApplicationConfig.existRecentProject(project)) {
                 ApplicationConfig.writeRecentContent(project);
             }
-            MainUI.showMainStage(file.getAbsolutePath(), project.getNamespace());
-            ProjectUIController.addProjects(project);
+            ProjectUI.showMainStage(file.getAbsolutePath(), project.getNamespace());
+            CreateProjectController.addProjects(project);
             WelcomeUI.closeWelcomeStage();
         }
     }

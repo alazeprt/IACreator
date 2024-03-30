@@ -24,7 +24,7 @@ public class WelcomeUI extends Application {
         logger.info("Loading Welcome Page...");
         Parent root = null;
         try {
-            root = FXMLLoader.load(WelcomeUI.class.getResource("WelcomePage.fxml"));
+            root = FXMLLoader.load(WelcomeUI.class.getResource("Welcome.fxml"));
         } catch (IOException e) {
             logger.fatal("Failed to load Welcome Page!", e);
         }
@@ -41,7 +41,7 @@ public class WelcomeUI extends Application {
         Stage primaryStage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(WelcomeUI.class.getResource("WelcomePage.fxml"));
+            root = FXMLLoader.load(WelcomeUI.class.getResource("Welcome.fxml"));
         } catch (IOException e) {
             logger.fatal("Failed to load Welcome Page!", e);
         }

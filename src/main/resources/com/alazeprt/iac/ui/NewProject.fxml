@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
             prefWidth="450.0" style="-fx-background-color: #cdd8e0;" xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alazeprt.iac.ui.ProjectUIController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alazeprt.iac.ui.CreateProjectController">
    <Label layoutX="40.0" layoutY="40.0" text="Name (namespace): " textFill="#27374d">
       <font>
          <Font size="16.0"/>

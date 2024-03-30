@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
-public class MainUI {
+public class ProjectUI {
     private static Stage mainStage;
     protected static String path = "";
     private static final Logger logger = LogManager.getLogger();
@@ -35,12 +35,12 @@ public class MainUI {
         Stage projectStage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(MainUI.class.getResource("MainPage.fxml"));
+            root = FXMLLoader.load(ProjectUI.class.getResource("Project.fxml"));
         } catch (IOException e) {
             logger.fatal("Failed to load Project Page!", e);
         }
         Scene scene = new Scene(root, 960, 640);
-        projectStage.getIcons().add(new Image(MainUI.class.getResource("image/icon.png").toString()));
+        projectStage.getIcons().add(new Image(ProjectUI.class.getResource("image/icon.png").toString()));
         projectStage.setTitle("Project - " + projectName);
         projectStage.setScene(scene);
         projectStage.setResizable(false);

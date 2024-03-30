@@ -19,13 +19,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Pattern;
 
-public class ProjectUIController {
+public class CreateProjectController {
 
     @FXML
     private ImageView folderIcon;
@@ -48,7 +46,7 @@ public class ProjectUIController {
     private TextField folder;
 
     public void initialize() {
-        folderIcon.setImage(new Image(ProjectUIController.class.getResource("image/folder.png").toString()));
+        folderIcon.setImage(new Image(CreateProjectController.class.getResource("image/folder.png").toString()));
         nameError.setVisible(true);
     }
 
@@ -71,10 +69,12 @@ public class ProjectUIController {
             path.toFile().mkdirs();
         }
         Project project = new Project(namespace.getText(), Path.of(folder.getText()));
-        ApplicationConfig.writeRecentContent(project);
+        if(!ApplicationConfig.existRecentProject(project)) {
+            ApplicationConfig.writeRecentContent(project);
+        }
         addProjects(project);
         ProjectConfig.create(project);
-        MainUI.showMainStage(folder.getText(), project.getNamespace());
+        ProjectUI.showMainStage(folder.getText(), project.getNamespace());
         Project.closeCreateStage();
         WelcomeUI.closeWelcomeStage();
     }
@@ -132,7 +132,7 @@ public class ProjectUIController {
         projectPath.setTextFill(Paint.valueOf("#9db2bf"));
         projectPath.setMaxWidth(450);
         anchorPane.getChildren().add(projectPath);
-        ImageView removeImage = new ImageView(new Image(ProjectUIController.class.getResource("image/remove.png").toString()));
+        ImageView removeImage = new ImageView(new Image(CreateProjectController.class.getResource("image/remove.png").toString()));
         removeImage.setLayoutX(480);
         removeImage.setLayoutY(35);
         removeImage.setFitWidth(30);
@@ -152,7 +152,7 @@ public class ProjectUIController {
             List<Project> projectList = ApplicationConfig.getProjects("");
             projectCount = 0;
             for(Project project2 : projectList) {
-                ProjectUIController.addProjects(project2);
+                CreateProjectController.addProjects(project2);
             }
         });
         anchorPane.getChildren().add(removeButton);

@@ -3,7 +3,6 @@ package com.alazeprt.iac.ui;
 import com.alazeprt.iac.config.ApplicationConfig;
 import com.alazeprt.iac.config.ProjectConfig;
 import com.alazeprt.iac.utils.Project;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -22,7 +21,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.List;
 
-import static com.alazeprt.iac.ui.ProjectUIController.projectCount;
+import static com.alazeprt.iac.ui.CreateProjectController.projectCount;
 
 public class WelcomeController {
 
@@ -37,13 +36,13 @@ public class WelcomeController {
     private static final Logger logger = LogManager.getLogger();
 
     public static void openProject(Project project) {
-        MainUI.showMainStage(project.getPath().toString(), project.getNamespace());
+        ProjectUI.showMainStage(project.getPath().toString(), project.getNamespace());
         WelcomeUI.closeWelcomeStage();
     }
 
     public void initialize() {
         iacIcon.setImage(new Image(WelcomeController.class.getResource("image/icon.png").toString()));
-        ProjectUIController.injectProjectListPane(projectListPane);
+        CreateProjectController.injectProjectListPane(projectListPane);
         ApplicationConfig.initializeContent();
     }
 
@@ -64,8 +63,8 @@ public class WelcomeController {
             } else if (!ApplicationConfig.existRecentProject(project)) {
                 ApplicationConfig.writeRecentContent(project);
             }
-            MainUI.showMainStage(file.getAbsolutePath(), project.getNamespace());
-            ProjectUIController.addProjects(project);
+            ProjectUI.showMainStage(file.getAbsolutePath(), project.getNamespace());
+            CreateProjectController.addProjects(project);
             WelcomeUI.closeWelcomeStage();
         }
     }
@@ -76,7 +75,7 @@ public class WelcomeController {
         List<Project> projectList = ApplicationConfig.getProjects(projectFilter.getText());
         projectCount = 0;
         for (Project project : projectList) {
-            ProjectUIController.addProjects(project);
+            CreateProjectController.addProjects(project);
         }
     }
 
