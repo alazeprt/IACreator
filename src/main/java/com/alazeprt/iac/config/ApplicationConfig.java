@@ -1,6 +1,7 @@
 package com.alazeprt.iac.config;
 
 import com.alazeprt.iac.ui.CreateProjectController;
+import com.alazeprt.iac.ui.WelcomeController;
 import com.alazeprt.iac.utils.RecentProject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -40,7 +41,7 @@ public class ApplicationConfig {
                 unwriteRecentContent(recentProject.getUuid());
                 continue;
             }
-            CreateProjectController.addProjects(recentProject);
+            WelcomeController.addProjects(recentProject);
         }
     }
 

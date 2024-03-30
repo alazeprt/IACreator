@@ -134,7 +134,7 @@ public class ProjectController {
                 ApplicationConfig.writeRecentContent(recentProject);
             }
             ProjectUI.showMainStage(file.getAbsolutePath(), recentProject.getNamespace());
-            CreateProjectController.addProjects(recentProject);
+            WelcomeController.addProjects(recentProject);
             WelcomeUI.closeWelcomeStage();
         }
     }

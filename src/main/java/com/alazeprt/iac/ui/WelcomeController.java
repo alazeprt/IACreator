@@ -4,10 +4,15 @@ import com.alazeprt.iac.config.ApplicationConfig;
 import com.alazeprt.iac.config.ProjectConfig;
 import com.alazeprt.iac.utils.RecentProject;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -33,6 +38,7 @@ public class WelcomeController {
 
     @FXML
     private AnchorPane projectListPane;
+    private static AnchorPane staticProjectListPane;
     private static final Logger logger = LogManager.getLogger();
 
     public static void openProject(RecentProject recentProject) {
@@ -42,8 +48,12 @@ public class WelcomeController {
 
     public void initialize() {
         iacIcon.setImage(new Image(WelcomeController.class.getResource("image/icon.png").toString()));
-        CreateProjectController.injectProjectListPane(projectListPane);
+        injectProjectListPane(projectListPane);
         ApplicationConfig.initializeContent();
+    }
+
+    private static void injectProjectListPane(AnchorPane pane) {
+        staticProjectListPane = pane;
     }
 
     public void onCreateProject() {
@@ -64,7 +74,7 @@ public class WelcomeController {
                 ApplicationConfig.writeRecentContent(recentProject);
             }
             ProjectUI.showMainStage(file.getAbsolutePath(), recentProject.getNamespace());
-            CreateProjectController.addProjects(recentProject);
+            WelcomeController.addProjects(recentProject);
             WelcomeUI.closeWelcomeStage();
         }
     }
@@ -75,7 +85,7 @@ public class WelcomeController {
         List<RecentProject> recentProjectList = ApplicationConfig.getProjects(projectFilter.getText());
         projectCount = 0;
         for (RecentProject recentProject : recentProjectList) {
-            CreateProjectController.addProjects(recentProject);
+            WelcomeController.addProjects(recentProject);
         }
     }
 
@@ -103,5 +113,64 @@ public class WelcomeController {
                 logger.error("Failed to open Issues Tracker!", e);
             }
         }).start();
+    }
+
+    public static void addProjects(RecentProject recentProject) {
+        logger.debug("Adding recentProject: " + recentProject.getNamespace());
+        if(projectCount > 4) {
+            int addHeight = 105 + 120 * (projectCount - 5);
+            staticProjectListPane.setPrefHeight(staticProjectListPane.getPrefHeight() + addHeight);
+        }
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setPrefWidth(525);
+        anchorPane.setPrefHeight(100);
+        anchorPane.setLayoutX(23);
+        anchorPane.setLayoutY(20 + 120 * projectCount);
+        anchorPane.setStyle("-fx-border-color: #526D82;");
+        Label projectName = new Label(recentProject.getNamespace());
+        projectName.setLayoutX(14);
+        projectName.setLayoutY(14);
+        projectName.setFont(Font.font("System", FontWeight.BOLD, 24));
+        projectName.setTextFill(Paint.valueOf("#27374d"));
+        projectName.setMaxWidth(300);
+        anchorPane.getChildren().add(projectName);
+        Label projectPath = new Label(recentProject.getPath().toString());
+        projectPath.setLayoutX(14);
+        projectPath.setLayoutY(67);
+        projectPath.setTextFill(Paint.valueOf("#9db2bf"));
+        projectPath.setMaxWidth(450);
+        anchorPane.getChildren().add(projectPath);
+        ImageView removeImage = new ImageView(new Image(CreateProjectController.class.getResource("image/remove.png").toString()));
+        removeImage.setLayoutX(480);
+        removeImage.setLayoutY(35);
+        removeImage.setFitWidth(30);
+        removeImage.setFitHeight(30);
+        anchorPane.getChildren().add(removeImage);
+        removeImage.setMouseTransparent(true);
+        Button removeButton = new Button();
+        removeButton.setStyle("-fx-background-color: rgba(0,0,0,0)");
+        removeButton.setLayoutX(480);
+        removeButton.setLayoutY(35);
+        removeButton.setPrefWidth(30);
+        removeButton.setPrefHeight(30);
+        removeButton.setOnAction(actionEvent -> {
+            ApplicationConfig.unwriteRecentContent(recentProject.getUuid());
+            staticProjectListPane.getChildren().clear();
+            staticProjectListPane.setPrefHeight(515);
+            List<RecentProject> recentProjectList = ApplicationConfig.getProjects("");
+            projectCount = 0;
+            for(RecentProject recentProject2 : recentProjectList) {
+                addProjects(recentProject2);
+            }
+        });
+        anchorPane.getChildren().add(removeButton);
+        anchorPane.setOnMouseClicked(event -> {
+            if(event.getX() >= 480 && event.getX() <= 510 && event.getY() >= 35 && event.getY() <= 65) {
+                return;
+            }
+            WelcomeController.openProject(recentProject);
+        });
+        staticProjectListPane.getChildren().add(anchorPane);
+        projectCount++;
     }
 }

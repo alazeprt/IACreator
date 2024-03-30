@@ -72,7 +72,7 @@ public class CreateProjectController {
         if(!ApplicationConfig.existRecentProject(recentProject)) {
             ApplicationConfig.writeRecentContent(recentProject);
         }
-        addProjects(recentProject);
+        WelcomeController.addProjects(recentProject);
         ProjectConfig.create(recentProject);
         ProjectUI.showMainStage(folder.getText(), recentProject.getNamespace());
         RecentProject.closeCreateStage();
@@ -105,64 +105,5 @@ public class CreateProjectController {
     public void onInputName() {
         Pattern pattern = Pattern.compile("^[0-9a-zA-Z_]{1,}$");
         nameError.setVisible(!pattern.matcher(namespace.getText()).matches());
-    }
-
-    public static void addProjects(RecentProject recentProject) {
-        logger.debug("Adding recentProject: " + recentProject.getNamespace());
-        if(projectCount > 4) {
-            int addHeight = 105 + 120 * (projectCount - 5);
-            projectListPane.setPrefHeight(projectListPane.getPrefHeight() + addHeight);
-        }
-        AnchorPane anchorPane = new AnchorPane();
-        anchorPane.setPrefWidth(525);
-        anchorPane.setPrefHeight(100);
-        anchorPane.setLayoutX(23);
-        anchorPane.setLayoutY(20 + 120 * projectCount);
-        anchorPane.setStyle("-fx-border-color: #526D82;");
-        Label projectName = new Label(recentProject.getNamespace());
-        projectName.setLayoutX(14);
-        projectName.setLayoutY(14);
-        projectName.setFont(Font.font("System", FontWeight.BOLD, 24));
-        projectName.setTextFill(Paint.valueOf("#27374d"));
-        projectName.setMaxWidth(300);
-        anchorPane.getChildren().add(projectName);
-        Label projectPath = new Label(recentProject.getPath().toString());
-        projectPath.setLayoutX(14);
-        projectPath.setLayoutY(67);
-        projectPath.setTextFill(Paint.valueOf("#9db2bf"));
-        projectPath.setMaxWidth(450);
-        anchorPane.getChildren().add(projectPath);
-        ImageView removeImage = new ImageView(new Image(CreateProjectController.class.getResource("image/remove.png").toString()));
-        removeImage.setLayoutX(480);
-        removeImage.setLayoutY(35);
-        removeImage.setFitWidth(30);
-        removeImage.setFitHeight(30);
-        anchorPane.getChildren().add(removeImage);
-        removeImage.setMouseTransparent(true);
-        Button removeButton = new Button();
-        removeButton.setStyle("-fx-background-color: rgba(0,0,0,0)");
-        removeButton.setLayoutX(480);
-        removeButton.setLayoutY(35);
-        removeButton.setPrefWidth(30);
-        removeButton.setPrefHeight(30);
-        removeButton.setOnAction(actionEvent -> {
-            ApplicationConfig.unwriteRecentContent(recentProject.getUuid());
-            projectListPane.getChildren().clear();
-            projectListPane.setPrefHeight(515);
-            List<RecentProject> recentProjectList = ApplicationConfig.getProjects("");
-            projectCount = 0;
-            for(RecentProject recentProject2 : recentProjectList) {
-                CreateProjectController.addProjects(recentProject2);
-            }
-        });
-        anchorPane.getChildren().add(removeButton);
-        anchorPane.setOnMouseClicked(event -> {
-            if(event.getX() >= 480 && event.getX() <= 510 && event.getY() >= 35 && event.getY() <= 65) {
-                return;
-            }
-            WelcomeController.openProject(recentProject);
-        });
-        projectListPane.getChildren().add(anchorPane);
-        projectCount++;
     }
 }
