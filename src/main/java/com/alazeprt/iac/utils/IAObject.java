@@ -11,4 +11,7 @@ public abstract class IAObject {
     }
 
     public abstract IAObjectType getType();
+    public String toNamespace() {
+        return name.toLowerCase().replace(" ", "_");
+    }
 }

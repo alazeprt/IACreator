@@ -21,6 +21,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Path;
 import java.util.LinkedList;
@@ -103,7 +106,7 @@ public class ProjectController {
     }
 
     public void initialize() {
-        generateTreeView(new File(ProjectUI.path));
+        generateTreeView(ProjectUI.iaConfig.getRoot());
         injectPane(objectsPane);
         splitPane.getStylesheets().add(ProjectUI.class.getResource("style/MainPage.css").toString());
     }
@@ -175,7 +178,14 @@ public class ProjectController {
         objectName.setTextFill(Paint.valueOf("#27374d"));
         objectName.setMaxWidth(300);
         if(clazz instanceof ImageObject) {
-            ImageView imageView = new ImageView();
+            File file = ((ImageObject) clazz).getResource().toFile();
+            InputStream stream = null;
+            try {
+                stream = new FileInputStream(file);
+            } catch (FileNotFoundException e) {
+                logger.error("Failed to read image file!", e);
+            }
+            ImageView imageView = new ImageView(new Image(stream));
             imageView.setFitWidth(50);
             imageView.setFitHeight(50);
             imageView.setLayoutX(14);

@@ -14,27 +14,26 @@ import java.io.IOException;
 
 public class ProjectUI {
     private static Stage mainStage;
-    protected static String path = "";
+    protected static IAConfig iaConfig = null;
     private static final Logger logger = LogManager.getLogger();
     protected static void showMainStage(String folder, String projectName) {
         if(mainStage != null) {
             if(!mainStage.isShowing()) {
-                path = folder;
+                iaConfig = new IAConfig(projectName, new File(folder));
                 showMainStageHandler(projectName);
             } else {
                 mainStage.close();
-                path = folder;
+                iaConfig = new IAConfig(projectName, new File(folder));
                 showMainStageHandler(projectName);
             }
         } else {
-            path = folder;
+            iaConfig = new IAConfig(projectName, new File(folder));
             showMainStageHandler(projectName);
         }
     }
 
     private static void showMainStageHandler(String projectName) {
         logger.info("Loading Project Page...");
-        IAConfig iaConfig = new IAConfig(projectName, new File(path));
         iaConfig.generateDefaultConfig();
         Stage projectStage = new Stage();
         Parent root = null;
@@ -55,6 +54,6 @@ public class ProjectUI {
     protected static void closeMainStage() {
         mainStage.close();
         mainStage = null;
-        path = "";
+        iaConfig = null;
     }
 }
