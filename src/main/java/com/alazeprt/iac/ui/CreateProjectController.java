@@ -108,6 +108,7 @@ public class CreateProjectController {
     }
 
     public static void addProjects(RecentProject recentProject) {
+        boolean fileExist = recentProject.getPath().toFile().exists();
         logger.debug("Adding recentProject: " + recentProject.getNamespace());
         if(projectCount > 4) {
             int addHeight = 105 + 120 * (projectCount - 5);

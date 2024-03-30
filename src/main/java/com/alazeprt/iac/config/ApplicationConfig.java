@@ -35,6 +35,11 @@ public class ApplicationConfig {
             return;
         }
         for (RecentProject recentProject : recentProjects) {
+            if(!recentProject.getPath().toFile().exists()) {
+                logger.warn("Recent project not found: " + recentProject.getNamespace() + ", remove it");
+                unwriteRecentContent(recentProject.getUuid());
+                continue;
+            }
             CreateProjectController.addProjects(recentProject);
         }
     }
@@ -160,9 +165,5 @@ public class ApplicationConfig {
             }
         }
         return false;
-    }
-
-    public static void handleRecentContent() {
-        // TODO: Change not exists content color -> grey
     }
 }
