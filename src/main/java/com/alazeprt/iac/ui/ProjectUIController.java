@@ -15,8 +15,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +23,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class ProjectUIController {
-    private static final Logger logger = LoggerFactory.getLogger(ProjectUIController.class.toString());
 
     @FXML
     private ImageView folderIcon;
@@ -56,7 +53,6 @@ public class ProjectUIController {
     }
 
     public void create() throws IOException {
-        logger.info("Creating new project...");
         if(nameError.isVisible()) {
             return;
         }
@@ -88,12 +84,10 @@ public class ProjectUIController {
     }
 
     public void cancel() {
-        logger.info("Cancelling project creation...");
         Project.closeCreateStage();
     }
 
     public void openFolderChooser() {
-        logger.info("Opening project's folder chooser stage...");
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Choose a folder...");
         File file = chooser.showDialog(new Stage());
@@ -118,7 +112,6 @@ public class ProjectUIController {
     }
 
     public static void addProjects(Project project) {
-        logger.info("Adding recent project to welcome page: " + project.getNamespace());
         if(projectCount > 4) {
             int addHeight = 105 + 120 * (projectCount - 5);
             projectListPane.setPrefHeight(projectListPane.getPrefHeight() + addHeight);
@@ -156,11 +149,9 @@ public class ProjectUIController {
         removeButton.setPrefWidth(30);
         removeButton.setPrefHeight(30);
         removeButton.setOnAction(actionEvent -> {
-            logger.info("Removing recent project from welcome page: " + project.getNamespace());
             try {
                 ApplicationConfig.unwriteRecentContent(project.getUuid());
             } catch (IOException e) {
-                logger.error("Failed to remove recent project from configuration: " + e);
                 return;
             }
             projectListPane.getChildren().clear();
@@ -179,7 +170,6 @@ public class ProjectUIController {
             try {
                 WelcomeController.openProject(project);
             } catch (IOException e) {
-                logger.error("Failed to open project: " + e);
             }
         });
         projectListPane.getChildren().add(anchorPane);

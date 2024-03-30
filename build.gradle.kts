@@ -16,7 +16,6 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.17.0")
-    implementation("ch.qos.logback:logback-classic:1.5.3")
 }
 
 tasks.test {
@@ -38,8 +37,17 @@ tasks.withType(JavaCompile::class) {
 }
 
 jlink {
-    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
-        name = 'IACreator'
+        name = "IACreator"
+    }
+
+    jpackage {
+        installerOutputDir = file("$buildDir/installer")
+        if(org.gradle.internal.os.OperatingSystem.current().isWindows) {
+            installerOptions.add("--win-dir-chooser")
+            installerOptions.add("--win-per-user-install")
+            installerOptions.add("--win-menu")
+            installerOptions.add("--win-shortcut")
+        }
     }
 }

@@ -8,8 +8,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +16,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class MainController {
-    private static final Logger logger = LoggerFactory.getLogger(MainController.class.toString());
 
     @FXML
     private MenuItem functionCopy;
@@ -39,7 +36,6 @@ public class MainController {
     private TreeView<String> folderTree;
 
     private void generateTreeView(File dirPath) {
-        logger.info("Generating tree view...");
         TreeItem<String> root = new TreeItem<>(dirPath.getName());
         Queue<File> queue = new LinkedList<>();
         queue.offer(dirPath);
