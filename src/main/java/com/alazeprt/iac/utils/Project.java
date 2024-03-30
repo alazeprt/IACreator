@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -16,6 +18,7 @@ public class Project {
     private final String namespace;
     private final Path path;
     private final UUID uuid;
+    private static final Logger logger = LogManager.getLogger();
     public Project(String namespace, Path path) {
         this.namespace = namespace;
         this.path = path;
@@ -40,6 +43,7 @@ public class Project {
     }
 
     private static void showCreateStageHandler() throws IOException {
+        logger.info("Loading Create New Project Page...");
         Stage createProjectStage = new Stage();
         Parent root = FXMLLoader.load(WelcomeUI.class.getResource("NewProject.fxml"));
         Scene scene = new Scene(root, 450, 400);

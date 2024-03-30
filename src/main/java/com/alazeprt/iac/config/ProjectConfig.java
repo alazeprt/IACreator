@@ -2,6 +2,8 @@ package com.alazeprt.iac.config;
 
 import com.alazeprt.iac.utils.Project;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +13,9 @@ import java.util.Map;
 import java.util.UUID;
 
 public class ProjectConfig {
+    private static final Logger logger = LogManager.getLogger();
     public static void create(Project project) {
+        logger.info("Creating project config...");
         File file = new File(project.getPath() + "/.iac.json");
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> root = new HashMap<>();

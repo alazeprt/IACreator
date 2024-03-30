@@ -8,6 +8,8 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,8 +36,10 @@ public class MainController {
 
     @FXML
     private TreeView<String> folderTree;
+    private static final Logger logger = LogManager.getLogger();
 
     private void generateTreeView(File dirPath) {
+        logger.info("Generating folder tree view...");
         TreeItem<String> root = new TreeItem<>(dirPath.getName());
         Queue<File> queue = new LinkedList<>();
         queue.offer(dirPath);
@@ -103,6 +107,7 @@ public class MainController {
     }
 
     public void onCloseProject() throws IOException {
+        logger.info("Closing project...");
         ProjectUIController.projectCount = 0;
         MainUI.closeMainStage();
         WelcomeUI.start();

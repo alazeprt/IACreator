@@ -15,11 +15,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 public class ProjectUIController {
@@ -39,6 +42,7 @@ public class ProjectUIController {
     private static AnchorPane projectListPane;
 
     protected static int projectCount = 0;
+    private static final Logger logger = LogManager.getLogger();
 
     @FXML
     private TextField folder;
@@ -60,15 +64,7 @@ public class ProjectUIController {
             return;
         }
         if(locationWarn.isVisible()) {
-            WarningUI.showWarningStage("The location looks like a directory rather than a file name. " +
-                    "Are you sure you want to continue?", () -> {
-                locationWarn.setVisible(false);
-                try {
-                    create();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }, () -> locationWarn.setVisible(true));
+            locationWarn.setVisible(false);
         }
         Path path = Path.of(folder.getText());
         if(!path.toFile().exists() || !path.toFile().isDirectory()) {
@@ -112,6 +108,7 @@ public class ProjectUIController {
     }
 
     public static void addProjects(Project project) {
+        logger.debug("Adding project: " + project.getNamespace());
         if(projectCount > 4) {
             int addHeight = 105 + 120 * (projectCount - 5);
             projectListPane.setPrefHeight(projectListPane.getPrefHeight() + addHeight);

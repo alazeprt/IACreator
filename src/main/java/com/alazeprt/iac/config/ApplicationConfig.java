@@ -3,6 +3,8 @@ package com.alazeprt.iac.config;
 import com.alazeprt.iac.ui.ProjectUIController;
 import com.alazeprt.iac.utils.Project;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +12,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class ApplicationConfig {
+    private static final Logger logger = LogManager.getLogger();
     public static void initialize() {
         ObjectMapper mapper = new ObjectMapper();
         File config = new File(".iac.json");
@@ -26,6 +29,7 @@ public class ApplicationConfig {
     }
 
     public static void initializeContent() {
+        logger.info("Getting recents...");
         List<Project> projects = getProjects();
         if(projects.isEmpty()) {
             return;
@@ -76,11 +80,13 @@ public class ApplicationConfig {
     }
 
     private static void saveDefaultConfig() {
+        logger.warn("config .iac.json not found! Saving default config...");
         ObjectMapper mapper = new ObjectMapper();
         File config = new File(".iac.json");
         try {
             mapper.writeValue(config, Map.of("version", "1.0.0-alpha.1"));
         } catch (IOException e) {
+            logger.error("Failed to save default config!", e);
         }
     }
 

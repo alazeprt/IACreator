@@ -6,13 +6,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 
 public class AboutUIController {
     private static Stage aboutStage;
 
+    private static final Logger logger = LogManager.getLogger();
+
     private static void showAboutStageHandler() throws IOException {
+        logger.info("Loading About Page...");
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(AboutUIController.class.getResource("About.fxml"));
         Scene scene = new Scene(root, 300, 200);

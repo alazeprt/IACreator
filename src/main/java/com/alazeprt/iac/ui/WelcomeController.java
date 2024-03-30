@@ -11,6 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -32,6 +34,7 @@ public class WelcomeController {
 
     @FXML
     private AnchorPane projectListPane;
+    private static final Logger logger = LogManager.getLogger();
 
     public static void openProject(Project project) throws IOException {
         MainUI.showMainStage(project.getPath().toString(), project.getNamespace());
@@ -59,7 +62,6 @@ public class WelcomeController {
                 ProjectConfig.create(project);
                 ApplicationConfig.writeRecentContent(project);
             } else if (!ApplicationConfig.existRecentProject(project)) {
-                System.out.println(2);
                 ApplicationConfig.writeRecentContent(project);
             }
             MainUI.showMainStage(file.getAbsolutePath(), project.getNamespace());
@@ -83,6 +85,7 @@ public class WelcomeController {
     }
 
     public void openGithub() {
+        logger.info("Opening GitHub Link...");
         new Thread(() -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://github.com/alazeprt/IACreator"));
@@ -93,6 +96,7 @@ public class WelcomeController {
     }
 
     public void openIssues() {
+        logger.info("Opening Issues Tracker...");
         new Thread(() -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://github.com/alazeprt/IACreator/issues"));

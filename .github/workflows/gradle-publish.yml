@@ -35,28 +35,38 @@ jobs:
         run: ./gradlew --info --stacktrace jlink
       - name: Execute jpackage
         run: ./gradlew --info --stacktrace jpackage
+      - name: Compress image
+        uses: thedoctor0/zip-release@0.7.5
+        with:
+          filename: image.zip
+          path: build/image/
       - name: Upload DMG as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: MCServerDownload-GUI-jdk${{ matrix.java }}-macos-dmg
+          name: IACreator-jdk${{ matrix.java }}-macos-dmg
           path: build/installer/*.dmg
       - name: Upload EXE as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: MCServerDownload-GUI-jdk${{ matrix.java }}-windows-exe
+          name: IACreator-jdk${{ matrix.java }}-windows-exe
           path: build/installer/*.exe
       - name: Upload MSI as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: MCServerDownload-GUI-jdk${{ matrix.java }}-windows-msi
+          name: IACreator-jdk${{ matrix.java }}-windows-msi
           path: build/installer/*.msi
       - name: Upload DEB as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: MCServerDownload-GUI-jdk${{ matrix.java }}-linux-deb
+          name: IACreator-jdk${{ matrix.java }}-linux-deb
           path: build/installer/*.deb
       - name: Upload RPM as an artifact
         uses: actions/upload-artifact@v2
         with:
-          name: MCServerDownload-GUI-jdk${{ matrix.java }}-linux-rpm
+          name: IACreator-jdk${{ matrix.java }}-linux-rpm
           path: build/installer/*.rpm
+      - name: Upload ZIP as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: IACreator-jdk${{ matrix.java }}-image
+          path: image.zip
