@@ -1,5 +1,6 @@
 package com.alazeprt.iac.ui;
 
+import com.alazeprt.iac.config.IAConfig;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,6 +9,7 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.io.IOException;
 
 public class ProjectUI {
@@ -32,6 +34,8 @@ public class ProjectUI {
 
     private static void showMainStageHandler(String projectName) {
         logger.info("Loading Project Page...");
+        IAConfig iaConfig = new IAConfig(projectName, new File(path));
+        iaConfig.generateDefaultConfig();
         Stage projectStage = new Stage();
         Parent root = null;
         try {
