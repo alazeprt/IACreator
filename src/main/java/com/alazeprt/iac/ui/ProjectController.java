@@ -1,6 +1,7 @@
 package com.alazeprt.iac.ui;
 
 import com.alazeprt.iac.config.ApplicationConfig;
+import com.alazeprt.iac.config.IAConfig;
 import com.alazeprt.iac.config.ProjectConfig;
 import com.alazeprt.iac.utils.IAObject;
 import com.alazeprt.iac.utils.ImageObject;
@@ -108,6 +109,7 @@ public class ProjectController {
     public void initialize() {
         generateTreeView(ProjectUI.iaConfig.getRoot());
         injectPane(objectsPane);
+        ProjectUI.iaConfig.getObjects().forEach(ProjectController::addObject);
         splitPane.getStylesheets().add(ProjectUI.class.getResource("style/MainPage.css").toString());
     }
 
@@ -129,6 +131,7 @@ public class ProjectController {
     public void onCloseProject() {
         logger.info("Closing project...");
         CreateProjectController.projectCount = 0;
+        ProjectController.objectCount = 0;
         ProjectUI.closeMainStage();
         WelcomeUI.start();
     }

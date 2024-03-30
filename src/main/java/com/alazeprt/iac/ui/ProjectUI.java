@@ -55,5 +55,6 @@ public class ProjectUI {
         mainStage.close();
         mainStage = null;
         iaConfig = null;
+
     }
 }
