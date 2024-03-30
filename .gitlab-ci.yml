@@ -17,7 +17,7 @@ before_script:
 
 build:
   stage: build
-  script: gradle build jlink
+  script: gradle build jlink jpackage --info
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
