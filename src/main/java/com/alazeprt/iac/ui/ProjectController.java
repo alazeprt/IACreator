@@ -2,13 +2,18 @@ package com.alazeprt.iac.ui;
 
 import com.alazeprt.iac.config.ApplicationConfig;
 import com.alazeprt.iac.config.ProjectConfig;
+import com.alazeprt.iac.utils.IAObject;
+import com.alazeprt.iac.utils.ImageObject;
+import com.alazeprt.iac.utils.Item;
 import com.alazeprt.iac.utils.RecentProject;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -37,9 +42,12 @@ public class ProjectController {
     @FXML
     private AnchorPane objectsPane;
 
+    private static AnchorPane injectObjectsPane;
+
     @FXML
     private TreeView<String> folderTree;
     private static final Logger logger = LogManager.getLogger();
+    private static int objectCount = 0;
 
     private void generateTreeView(File dirPath) {
         logger.info("Generating folder tree view...");
@@ -95,7 +103,12 @@ public class ProjectController {
 
     public void initialize() {
         generateTreeView(new File(ProjectUI.path));
+        injectPane(objectsPane);
         splitPane.getStylesheets().add(ProjectUI.class.getResource("style/MainPage.css").toString());
+    }
+
+    private static void injectPane(AnchorPane anchorPane) {
+        injectObjectsPane = anchorPane;
     }
 
     private String toRelativePath(File path, File root) {
@@ -139,5 +152,44 @@ public class ProjectController {
         }
     }
 
-
+    public static void addObject(IAObject clazz) {
+        logger.debug("Adding object: " + clazz.getName());
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setPrefHeight(150);
+        anchorPane.setPrefWidth(200);
+        int x = (objectCount % 3) * 240 + 40;
+        int y = (objectCount / 3) * 170 + 14;
+        int height = (objectCount / 3) * 170 + 170 + 14;
+        if(injectObjectsPane.getPrefHeight() < height) {
+            injectObjectsPane.setPrefHeight(height);
+        }
+        anchorPane.setLayoutX(x);
+        anchorPane.setLayoutY(y);
+        anchorPane.setStyle("-fx-background-color: rgba(0,0,0,0);");
+        anchorPane.setStyle("-fx-border-color: #526D82;");
+        Label objectName = new Label(clazz.getName());
+        objectName.setLayoutX(14);
+        objectName.setLayoutY(14);
+        objectName.setFont(Font.font("System", FontWeight.BOLD, 24));
+        objectName.setTextFill(Paint.valueOf("#27374d"));
+        objectName.setMaxWidth(300);
+        if(clazz instanceof ImageObject) {
+            ImageView imageView = new ImageView();
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
+            imageView.setLayoutX(14);
+            imageView.setLayoutY(14);
+            anchorPane.getChildren().add(imageView);
+            objectName.setLayoutX(74);
+        }
+        anchorPane.getChildren().add(objectName);
+        Label objectType = new Label("Type: " + clazz.getType().name());
+        objectType.setLayoutX(14);
+        objectType.setLayoutY(117);
+        objectType.setTextFill(Paint.valueOf("#9db2bf"));
+        objectType.setMaxWidth(450);
+        anchorPane.getChildren().add(objectType);
+        injectObjectsPane.getChildren().add(anchorPane);
+        objectCount++;
+    }
 }

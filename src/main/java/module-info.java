@@ -13,4 +13,6 @@ module IACreator.main {
 
     exports com.alazeprt.iac.ui;
     opens com.alazeprt.iac.ui to javafx.fxml;
+
+    exports com.alazeprt.iac.utils;
 }
