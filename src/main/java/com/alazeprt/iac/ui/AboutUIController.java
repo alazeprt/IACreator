@@ -16,10 +16,15 @@ public class AboutUIController {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static void showAboutStageHandler() throws IOException {
+    private static void showAboutStageHandler() {
         logger.info("Loading About Page...");
         Stage stage = new Stage();
-        Parent root = FXMLLoader.load(AboutUIController.class.getResource("About.fxml"));
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(AboutUIController.class.getResource("About.fxml"));
+        } catch (IOException e) {
+            logger.fatal("Failed to load About Page!", e);
+        }
         Scene scene = new Scene(root, 300, 200);
         stage.getIcons().add(new Image(AboutUIController.class.getResource("image/icon.png").toString()));
         stage.setTitle("About");
@@ -29,7 +34,7 @@ public class AboutUIController {
         aboutStage = stage;
     }
 
-    public static void showAboutStage() throws IOException {
+    public static void showAboutStage() {
         if(aboutStage != null) {
             if(!aboutStage.isShowing()) {
                 showAboutStageHandler();

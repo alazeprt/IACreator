@@ -20,9 +20,14 @@ public class WelcomeUI extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) {
         logger.info("Loading Welcome Page...");
-        Parent root = FXMLLoader.load(WelcomeUI.class.getResource("WelcomePage.fxml"));
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(WelcomeUI.class.getResource("WelcomePage.fxml"));
+        } catch (IOException e) {
+            logger.fatal("Failed to load Welcome Page!", e);
+        }
         Scene scene = new Scene(root, 800, 600);
         primaryStage.getIcons().add(new Image(WelcomeUI.class.getResource("image/icon.png").toString()));
         primaryStage.setTitle("IACreator");
@@ -32,9 +37,14 @@ public class WelcomeUI extends Application {
         stage = primaryStage;
     }
 
-    public static void start() throws IOException {
+    public static void start() {
         Stage primaryStage = new Stage();
-        Parent root = FXMLLoader.load(WelcomeUI.class.getResource("WelcomePage.fxml"));
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(WelcomeUI.class.getResource("WelcomePage.fxml"));
+        } catch (IOException e) {
+            logger.fatal("Failed to load Welcome Page!", e);
+        }
         Scene scene = new Scene(root, 800, 600);
         primaryStage.getIcons().add(new Image(WelcomeUI.class.getResource("image/icon.png").toString()));
         primaryStage.setTitle("IACreator");

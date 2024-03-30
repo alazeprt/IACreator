@@ -34,14 +34,14 @@ public class ProjectConfig {
             try {
                 mapper.writeValue(file, root);
             } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                logger.error("Failed to write .iac.json!", ex);
             }
         }
         file.delete();
         try {
             mapper.writeValue(file, root);
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            logger.error("Failed to write .iac.json!", ex);
         }
     }
 

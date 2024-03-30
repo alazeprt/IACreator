@@ -56,7 +56,7 @@ public class ProjectUIController {
         projectListPane = anchorPane;
     }
 
-    public void create() throws IOException {
+    public void create() {
         if(nameError.isVisible()) {
             return;
         }
@@ -146,11 +146,7 @@ public class ProjectUIController {
         removeButton.setPrefWidth(30);
         removeButton.setPrefHeight(30);
         removeButton.setOnAction(actionEvent -> {
-            try {
-                ApplicationConfig.unwriteRecentContent(project.getUuid());
-            } catch (IOException e) {
-                return;
-            }
+            ApplicationConfig.unwriteRecentContent(project.getUuid());
             projectListPane.getChildren().clear();
             projectListPane.setPrefHeight(515);
             List<Project> projectList = ApplicationConfig.getProjects("");
@@ -164,10 +160,7 @@ public class ProjectUIController {
             if(event.getX() >= 480 && event.getX() <= 510 && event.getY() >= 35 && event.getY() <= 65) {
                 return;
             }
-            try {
-                WelcomeController.openProject(project);
-            } catch (IOException e) {
-            }
+            WelcomeController.openProject(project);
         });
         projectListPane.getChildren().add(anchorPane);
         projectCount++;

@@ -90,9 +90,15 @@ public class ApplicationConfig {
         }
     }
 
-    public static void writeRecentContent(Project... recentProjects) throws IOException {
+    public static void writeRecentContent(Project... recentProjects) {
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.readValue(new File(".iac.json"), HashMap.class);
+        Map<String, Object> map;
+        try {
+            map = mapper.readValue(new File(".iac.json"), HashMap.class);
+        } catch (IOException e) {
+            logger.error("Failed to read .iac.json!", e);
+            return;
+        }
         List<Project> recentProjectList = Arrays.asList(recentProjects);
         if(map.getOrDefault("recents", "").equals("")) {
             map.put("recents", recentProjectList);
@@ -101,20 +107,40 @@ public class ApplicationConfig {
             configRecentProjectList.addAll(recentProjectList);
             map.put("recents", configRecentProjectList);
         }
-        mapper.writeValue(new File(".iac.json"), map);
+        try {
+            mapper.writeValue(new File(".iac.json"), map);
+        } catch (IOException e) {
+            logger.error("Failed to write .iac.json!", e);
+        }
     }
 
-    public static void unwriteRecentContent(UUID uuid) throws IOException {
+    public static void unwriteRecentContent(UUID uuid) {
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.readValue(new File(".iac.json"), HashMap.class);
+        Map<String, Object> map = null;
+        try {
+            map = mapper.readValue(new File(".iac.json"), HashMap.class);
+        } catch (IOException e) {
+            logger.error("Failed to read .iac.json!", e);
+            return;
+        }
         ((List<LinkedHashMap<String, Object>>) map.get("recents"))
                 .removeIf(recentProject -> recentProject.get("uuid").toString().equals(uuid.toString()));
-        mapper.writeValue(new File(".iac.json"), map);
+        try {
+            mapper.writeValue(new File(".iac.json"), map);
+        } catch (IOException e) {
+            logger.error("Failed to write .iac.json!", e);
+        }
     }
 
-    public static boolean existRecentProject(Project project) throws IOException {
+    public static boolean existRecentProject(Project project) {
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = mapper.readValue(new File(".iac.json"), HashMap.class);
+        Map<String, Object> map = null;
+        try {
+            map = mapper.readValue(new File(".iac.json"), HashMap.class);
+        } catch (IOException e) {
+            logger.error("Failed to read .iac.json!", e);
+            return false;
+        }
         if(map.get("recents") == null) {
             return false;
         }

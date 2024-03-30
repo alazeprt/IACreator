@@ -31,7 +31,7 @@ public class Project {
         this.uuid = uuid;
     }
 
-    public static void showCreateStage() throws IOException {
+    public static void showCreateStage() {
         if(createStage != null) {
             if(!createStage.isShowing()) {
                 showCreateStageHandler();
@@ -42,10 +42,15 @@ public class Project {
         }
     }
 
-    private static void showCreateStageHandler() throws IOException {
+    private static void showCreateStageHandler() {
         logger.info("Loading Create New Project Page...");
         Stage createProjectStage = new Stage();
-        Parent root = FXMLLoader.load(WelcomeUI.class.getResource("NewProject.fxml"));
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(WelcomeUI.class.getResource("NewProject.fxml"));
+        } catch (IOException e) {
+            logger.fatal("Failed to load Create New Project Page!", e);
+        }
         Scene scene = new Scene(root, 450, 400);
         createProjectStage.getIcons().add(new Image(WelcomeUI.class.getResource("image/icon.png").toString()));
         createProjectStage.setTitle("New Project...");

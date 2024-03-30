@@ -36,7 +36,7 @@ public class WelcomeController {
     private AnchorPane projectListPane;
     private static final Logger logger = LogManager.getLogger();
 
-    public static void openProject(Project project) throws IOException {
+    public static void openProject(Project project) {
         MainUI.showMainStage(project.getPath().toString(), project.getNamespace());
         WelcomeUI.closeWelcomeStage();
     }
@@ -47,11 +47,11 @@ public class WelcomeController {
         ApplicationConfig.initializeContent();
     }
 
-    public void onCreateProject() throws IOException {
+    public void onCreateProject() {
         Project.showCreateStage();
     }
 
-    public void onOpenProject() throws IOException {
+    public void onOpenProject() {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Choose a folder...");
         File file = chooser.showDialog(new Stage());
@@ -80,7 +80,7 @@ public class WelcomeController {
         }
     }
 
-    public void onViewAbout() throws IOException {
+    public void onViewAbout() {
         AboutUIController.showAboutStage();
     }
 
@@ -90,7 +90,7 @@ public class WelcomeController {
             try {
                 Desktop.getDesktop().browse(new URI("https://github.com/alazeprt/IACreator"));
             } catch (IOException | URISyntaxException e) {
-                throw new RuntimeException(e);
+                logger.error("Failed to open GitHub Link!", e);
             }
         }).start();
     }
@@ -101,7 +101,7 @@ public class WelcomeController {
             try {
                 Desktop.getDesktop().browse(new URI("https://github.com/alazeprt/IACreator/issues"));
             } catch (IOException | URISyntaxException e) {
-                throw new RuntimeException(e);
+                logger.error("Failed to open Issues Tracker!", e);
             }
         }).start();
     }

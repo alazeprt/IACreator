@@ -106,14 +106,14 @@ public class MainController {
         System.exit(0);
     }
 
-    public void onCloseProject() throws IOException {
+    public void onCloseProject() {
         logger.info("Closing project...");
         ProjectUIController.projectCount = 0;
         MainUI.closeMainStage();
         WelcomeUI.start();
     }
 
-    public void onCreateProject() throws IOException {
+    public void onCreateProject() {
         Project.showCreateStage();
     }
 }

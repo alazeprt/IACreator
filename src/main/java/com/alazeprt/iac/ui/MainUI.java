@@ -14,7 +14,7 @@ public class MainUI {
     private static Stage mainStage;
     protected static String path = "";
     private static final Logger logger = LogManager.getLogger();
-    protected static void showMainStage(String folder, String projectName) throws IOException {
+    protected static void showMainStage(String folder, String projectName) {
         if(mainStage != null) {
             if(!mainStage.isShowing()) {
                 path = folder;
@@ -30,10 +30,15 @@ public class MainUI {
         }
     }
 
-    private static void showMainStageHandler(String projectName) throws IOException {
+    private static void showMainStageHandler(String projectName) {
         logger.info("Loading Project Page...");
         Stage projectStage = new Stage();
-        Parent root = FXMLLoader.load(MainUI.class.getResource("MainPage.fxml"));
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(MainUI.class.getResource("MainPage.fxml"));
+        } catch (IOException e) {
+            logger.fatal("Failed to load Project Page!", e);
+        }
         Scene scene = new Scene(root, 960, 640);
         projectStage.getIcons().add(new Image(MainUI.class.getResource("image/icon.png").toString()));
         projectStage.setTitle("Project - " + projectName);
