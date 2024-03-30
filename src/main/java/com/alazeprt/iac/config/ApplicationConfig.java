@@ -100,13 +100,23 @@ public class ApplicationConfig {
             return;
         }
         List<Project> recentProjectList = Arrays.asList(recentProjects);
-        if(map.getOrDefault("recents", "").equals("")) {
-            map.put("recents", recentProjectList);
-        } else {
-            List<Project> configRecentProjectList = (List<Project>) map.get("recents");
-            configRecentProjectList.addAll(recentProjectList);
-            map.put("recents", configRecentProjectList);
-        }
+        List<Project> projectList = getProjects();
+        List<Map<String, Object>> projectMaps = new ArrayList<>();
+        projectList.forEach(project -> {
+            Map<String, Object> projectMap = new HashMap<>();
+            projectMap.put("namespace", project.getNamespace());
+            projectMap.put("path", project.getPath().toString());
+            projectMap.put("uuid", project.getUuid().toString());
+            projectMaps.add(projectMap);
+        });
+        recentProjectList.forEach(project -> {
+            Map<String, Object> projectMap = new HashMap<>();
+            projectMap.put("namespace", project.getNamespace());
+            projectMap.put("path", project.getPath().toString());
+            projectMap.put("uuid", project.getUuid().toString());
+            projectMaps.add(projectMap);
+        });
+        map.put("recents", projectMaps);
         try {
             mapper.writeValue(new File(".iac.json"), map);
         } catch (IOException e) {

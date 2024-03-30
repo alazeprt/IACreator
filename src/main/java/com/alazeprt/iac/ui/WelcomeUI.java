@@ -55,6 +55,10 @@ public class WelcomeUI extends Application {
     }
 
     public static void closeWelcomeStage() {
-        stage.close();
+        try {
+            stage.close();
+        } catch (Exception e) {
+            logger.warn("Failed to close Welcome Stage!", e);
+        }
     }
 }
