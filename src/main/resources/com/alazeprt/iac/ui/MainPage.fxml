@@ -14,9 +14,8 @@
                   <MenuButton minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: rgba(0,0,0,0);" text="File">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#onCreateProject" text="New Project" />
-                        <MenuItem mnemonicParsing="false" text="Open..." />
+                        <MenuItem mnemonicParsing="false" onAction="#onOpenProject" text="Open..." />
                         <MenuItem mnemonicParsing="false" text="Save Project" />
-                        <MenuItem mnemonicParsing="false" text="Save Project As..." />
                         <MenuItem mnemonicParsing="false" onAction="#onCloseProject" text="Close Project" />
                         <MenuItem mnemonicParsing="false" onAction="#onExit" text="Exit" />
                      </items>

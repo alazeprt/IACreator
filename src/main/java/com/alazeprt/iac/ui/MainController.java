@@ -1,5 +1,7 @@
 package com.alazeprt.iac.ui;
 
+import com.alazeprt.iac.config.ApplicationConfig;
+import com.alazeprt.iac.config.ProjectConfig;
 import com.alazeprt.iac.utils.Project;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,12 +10,15 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -115,5 +120,24 @@ public class MainController {
 
     public void onCreateProject() {
         Project.showCreateStage();
+    }
+
+    public void onOpenProject() {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Choose a folder...");
+        File file = chooser.showDialog(new Stage());
+        if (file != null) {
+            Project project = ProjectConfig.getProject(file.getAbsolutePath());
+            if (project == null) {
+                project = new Project(file.getName(), Path.of(file.getAbsolutePath()));
+                ProjectConfig.create(project);
+                ApplicationConfig.writeRecentContent(project);
+            } else if (!ApplicationConfig.existRecentProject(project)) {
+                ApplicationConfig.writeRecentContent(project);
+            }
+            MainUI.showMainStage(file.getAbsolutePath(), project.getNamespace());
+            ProjectUIController.addProjects(project);
+            WelcomeUI.closeWelcomeStage();
+        }
     }
 }
