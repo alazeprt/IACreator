@@ -13,19 +13,19 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.UUID;
 
-public class Project {
+public class RecentProject {
     private static Stage createStage;
     private final String namespace;
     private final Path path;
     private final UUID uuid;
     private static final Logger logger = LogManager.getLogger();
-    public Project(String namespace, Path path) {
+    public RecentProject(String namespace, Path path) {
         this.namespace = namespace;
         this.path = path;
         this.uuid = UUID.randomUUID();
     }
 
-    public Project(String namespace, Path path, UUID uuid) {
+    public RecentProject(String namespace, Path path, UUID uuid) {
         this.namespace = namespace;
         this.path = path;
         this.uuid = uuid;

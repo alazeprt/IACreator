@@ -2,7 +2,7 @@ package com.alazeprt.iac.ui;
 
 import com.alazeprt.iac.config.ApplicationConfig;
 import com.alazeprt.iac.config.ProjectConfig;
-import com.alazeprt.iac.utils.Project;
+import com.alazeprt.iac.utils.RecentProject;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -35,8 +35,8 @@ public class WelcomeController {
     private AnchorPane projectListPane;
     private static final Logger logger = LogManager.getLogger();
 
-    public static void openProject(Project project) {
-        ProjectUI.showMainStage(project.getPath().toString(), project.getNamespace());
+    public static void openProject(RecentProject recentProject) {
+        ProjectUI.showMainStage(recentProject.getPath().toString(), recentProject.getNamespace());
         WelcomeUI.closeWelcomeStage();
     }
 
@@ -47,7 +47,7 @@ public class WelcomeController {
     }
 
     public void onCreateProject() {
-        Project.showCreateStage();
+        RecentProject.showCreateStage();
     }
 
     public void onOpenProject() {
@@ -55,16 +55,16 @@ public class WelcomeController {
         chooser.setTitle("Choose a folder...");
         File file = chooser.showDialog(new Stage());
         if (file != null) {
-            Project project = ProjectConfig.getProject(file.getAbsolutePath());
-            if (project == null) {
-                project = new Project(file.getName(), Path.of(file.getAbsolutePath()));
-                ProjectConfig.create(project);
-                ApplicationConfig.writeRecentContent(project);
-            } else if (!ApplicationConfig.existRecentProject(project)) {
-                ApplicationConfig.writeRecentContent(project);
+            RecentProject recentProject = ProjectConfig.getProject(file.getAbsolutePath());
+            if (recentProject == null) {
+                recentProject = new RecentProject(file.getName(), Path.of(file.getAbsolutePath()));
+                ProjectConfig.create(recentProject);
+                ApplicationConfig.writeRecentContent(recentProject);
+            } else if (!ApplicationConfig.existRecentProject(recentProject)) {
+                ApplicationConfig.writeRecentContent(recentProject);
             }
-            ProjectUI.showMainStage(file.getAbsolutePath(), project.getNamespace());
-            CreateProjectController.addProjects(project);
+            ProjectUI.showMainStage(file.getAbsolutePath(), recentProject.getNamespace());
+            CreateProjectController.addProjects(recentProject);
             WelcomeUI.closeWelcomeStage();
         }
     }
@@ -72,10 +72,10 @@ public class WelcomeController {
     public void onSearch() {
         projectListPane.getChildren().clear();
         projectListPane.setPrefHeight(515);
-        List<Project> projectList = ApplicationConfig.getProjects(projectFilter.getText());
+        List<RecentProject> recentProjectList = ApplicationConfig.getProjects(projectFilter.getText());
         projectCount = 0;
-        for (Project project : projectList) {
-            CreateProjectController.addProjects(project);
+        for (RecentProject recentProject : recentProjectList) {
+            CreateProjectController.addProjects(recentProject);
         }
     }
 

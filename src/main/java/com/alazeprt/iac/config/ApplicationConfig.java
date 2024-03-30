@@ -1,7 +1,7 @@
 package com.alazeprt.iac.config;
 
 import com.alazeprt.iac.ui.CreateProjectController;
-import com.alazeprt.iac.utils.Project;
+import com.alazeprt.iac.utils.RecentProject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,18 +29,18 @@ public class ApplicationConfig {
     }
 
     public static void initializeContent() {
-        logger.info("Getting recents...");
-        List<Project> projects = getProjects();
-        if(projects.isEmpty()) {
+        logger.info("Getting recent projects...");
+        List<RecentProject> recentProjects = getProjects();
+        if(recentProjects.isEmpty()) {
             return;
         }
-        for (Project project : projects) {
-            CreateProjectController.addProjects(project);
+        for (RecentProject recentProject : recentProjects) {
+            CreateProjectController.addProjects(recentProject);
         }
     }
 
-    private static List<Project> getProjects() {
-        List<Project> projects = new ArrayList<>();
+    private static List<RecentProject> getProjects() {
+        List<RecentProject> recentProjects = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
         File config = new File(".iac.json");
         if(!config.exists()) {
@@ -50,16 +50,16 @@ public class ApplicationConfig {
             Map<String, Object> map = mapper.readValue(config, HashMap.class);
             List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("recents");
             for(Map<String, Object> record : list) {
-                projects.add(new Project(record.get("namespace").toString(),
+                recentProjects.add(new RecentProject(record.get("namespace").toString(),
                         Path.of(record.get("path").toString()), UUID.fromString(record.get("uuid").toString())));
             }
         } catch (Exception e) {
         }
-        return projects;
+        return recentProjects;
     }
 
-    public static List<Project> getProjects(String filter) {
-        List<Project> projects = new ArrayList<>();
+    public static List<RecentProject> getProjects(String filter) {
+        List<RecentProject> recentProjects = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
         File config = new File(".iac.json");
         if(!config.exists()) {
@@ -70,13 +70,13 @@ public class ApplicationConfig {
             List<Map<String, Object>> list = (List<Map<String, Object>>) map.get("recents");
             for(Map<String, Object> record : list) {
                 if(record.get("namespace").toString().contains(filter) || record.get("path").toString().contains(filter)) {
-                    projects.add(new Project(record.get("namespace").toString(),
+                    recentProjects.add(new RecentProject(record.get("namespace").toString(),
                             Path.of(record.get("path").toString()), UUID.fromString(record.get("uuid").toString())));
                 }
             }
         } catch (Exception e) {
         }
-        return projects;
+        return recentProjects;
     }
 
     private static void saveDefaultConfig() {
@@ -90,7 +90,7 @@ public class ApplicationConfig {
         }
     }
 
-    public static void writeRecentContent(Project... recentProjects) {
+    public static void writeRecentContent(RecentProject... recentProjects) {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map;
         try {
@@ -99,17 +99,17 @@ public class ApplicationConfig {
             logger.error("Failed to read .iac.json!", e);
             return;
         }
-        List<Project> recentProjectList = Arrays.asList(recentProjects);
-        List<Project> projectList = getProjects();
+        List<RecentProject> recentRecentListProject = Arrays.asList(recentProjects);
+        List<RecentProject> recentProjectList = getProjects();
         List<Map<String, Object>> projectMaps = new ArrayList<>();
-        projectList.forEach(project -> {
+        recentProjectList.forEach(project -> {
             Map<String, Object> projectMap = new HashMap<>();
             projectMap.put("namespace", project.getNamespace());
             projectMap.put("path", project.getPath().toString());
             projectMap.put("uuid", project.getUuid().toString());
             projectMaps.add(projectMap);
         });
-        recentProjectList.forEach(project -> {
+        recentRecentListProject.forEach(project -> {
             Map<String, Object> projectMap = new HashMap<>();
             projectMap.put("namespace", project.getNamespace());
             projectMap.put("path", project.getPath().toString());
@@ -142,7 +142,7 @@ public class ApplicationConfig {
         }
     }
 
-    public static boolean existRecentProject(Project project) {
+    public static boolean existRecentProject(RecentProject recentProject) {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = null;
         try {
@@ -155,7 +155,7 @@ public class ApplicationConfig {
             return false;
         }
         for(LinkedHashMap<String, Object> project1 : ((List<LinkedHashMap<String, Object>>) map.get("recents"))) {
-            if(project1.get("uuid").equals(project.getUuid().toString())) {
+            if(project1.get("uuid").equals(recentProject.getUuid().toString())) {
                 return true;
             }
         }

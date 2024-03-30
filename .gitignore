@@ -17,7 +17,7 @@ out/
 .apt_generated
 .classpath
 .factorypath
-.project
+.recentProject
 .settings
 .springBeans
 .sts4-cache

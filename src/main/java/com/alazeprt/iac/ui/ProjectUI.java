@@ -37,7 +37,7 @@ public class ProjectUI {
         try {
             root = FXMLLoader.load(ProjectUI.class.getResource("Project.fxml"));
         } catch (IOException e) {
-            logger.fatal("Failed to load Project Page!", e);
+            logger.fatal("Failed to Project Page!", e);
         }
         Scene scene = new Scene(root, 960, 640);
         projectStage.getIcons().add(new Image(ProjectUI.class.getResource("image/icon.png").toString()));

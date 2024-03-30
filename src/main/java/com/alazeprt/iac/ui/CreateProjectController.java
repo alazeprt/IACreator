@@ -2,7 +2,7 @@ package com.alazeprt.iac.ui;
 
 import com.alazeprt.iac.config.ApplicationConfig;
 import com.alazeprt.iac.config.ProjectConfig;
-import com.alazeprt.iac.utils.Project;
+import com.alazeprt.iac.utils.RecentProject;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -68,19 +68,19 @@ public class CreateProjectController {
         if(!path.toFile().exists() || !path.toFile().isDirectory()) {
             path.toFile().mkdirs();
         }
-        Project project = new Project(namespace.getText(), Path.of(folder.getText()));
-        if(!ApplicationConfig.existRecentProject(project)) {
-            ApplicationConfig.writeRecentContent(project);
+        RecentProject recentProject = new RecentProject(namespace.getText(), Path.of(folder.getText()));
+        if(!ApplicationConfig.existRecentProject(recentProject)) {
+            ApplicationConfig.writeRecentContent(recentProject);
         }
-        addProjects(project);
-        ProjectConfig.create(project);
-        ProjectUI.showMainStage(folder.getText(), project.getNamespace());
-        Project.closeCreateStage();
+        addProjects(recentProject);
+        ProjectConfig.create(recentProject);
+        ProjectUI.showMainStage(folder.getText(), recentProject.getNamespace());
+        RecentProject.closeCreateStage();
         WelcomeUI.closeWelcomeStage();
     }
 
     public void cancel() {
-        Project.closeCreateStage();
+        RecentProject.closeCreateStage();
     }
 
     public void openFolderChooser() {
@@ -107,8 +107,8 @@ public class CreateProjectController {
         nameError.setVisible(!pattern.matcher(namespace.getText()).matches());
     }
 
-    public static void addProjects(Project project) {
-        logger.debug("Adding project: " + project.getNamespace());
+    public static void addProjects(RecentProject recentProject) {
+        logger.debug("Adding recentProject: " + recentProject.getNamespace());
         if(projectCount > 4) {
             int addHeight = 105 + 120 * (projectCount - 5);
             projectListPane.setPrefHeight(projectListPane.getPrefHeight() + addHeight);
@@ -119,14 +119,14 @@ public class CreateProjectController {
         anchorPane.setLayoutX(23);
         anchorPane.setLayoutY(20 + 120 * projectCount);
         anchorPane.setStyle("-fx-border-color: #526D82;");
-        Label projectName = new Label(project.getNamespace());
+        Label projectName = new Label(recentProject.getNamespace());
         projectName.setLayoutX(14);
         projectName.setLayoutY(14);
         projectName.setFont(Font.font("System", FontWeight.BOLD, 24));
         projectName.setTextFill(Paint.valueOf("#27374d"));
         projectName.setMaxWidth(300);
         anchorPane.getChildren().add(projectName);
-        Label projectPath = new Label(project.getPath().toString());
+        Label projectPath = new Label(recentProject.getPath().toString());
         projectPath.setLayoutX(14);
         projectPath.setLayoutY(67);
         projectPath.setTextFill(Paint.valueOf("#9db2bf"));
@@ -146,13 +146,13 @@ public class CreateProjectController {
         removeButton.setPrefWidth(30);
         removeButton.setPrefHeight(30);
         removeButton.setOnAction(actionEvent -> {
-            ApplicationConfig.unwriteRecentContent(project.getUuid());
+            ApplicationConfig.unwriteRecentContent(recentProject.getUuid());
             projectListPane.getChildren().clear();
             projectListPane.setPrefHeight(515);
-            List<Project> projectList = ApplicationConfig.getProjects("");
+            List<RecentProject> recentProjectList = ApplicationConfig.getProjects("");
             projectCount = 0;
-            for(Project project2 : projectList) {
-                CreateProjectController.addProjects(project2);
+            for(RecentProject recentProject2 : recentProjectList) {
+                CreateProjectController.addProjects(recentProject2);
             }
         });
         anchorPane.getChildren().add(removeButton);
@@ -160,7 +160,7 @@ public class CreateProjectController {
             if(event.getX() >= 480 && event.getX() <= 510 && event.getY() >= 35 && event.getY() <= 65) {
                 return;
             }
-            WelcomeController.openProject(project);
+            WelcomeController.openProject(recentProject);
         });
         projectListPane.getChildren().add(anchorPane);
         projectCount++;
