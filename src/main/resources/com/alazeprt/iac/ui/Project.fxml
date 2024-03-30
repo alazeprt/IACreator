@@ -25,6 +25,7 @@
                         <MenuItem fx:id="functionCut" mnemonicParsing="false" text="Cut" />
                         <MenuItem fx:id="functionCopy" mnemonicParsing="false" text="Copy" />
                         <MenuItem fx:id="functionPaste" mnemonicParsing="false" text="Paste" />
+                        <MenuItem mnemonicParsing="false" onAction="#onAddItem" text="Add Item..." />
                      </items>
                   </MenuButton>
                   <MenuButton minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" style="-fx-background-color: rgba(0,0,0,0);" text="Pack">

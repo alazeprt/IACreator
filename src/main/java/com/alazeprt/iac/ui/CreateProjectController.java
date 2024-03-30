@@ -80,6 +80,8 @@ public class CreateProjectController {
     }
 
     public void cancel() {
+        namespace.clear();
+        folder.clear();
         RecentProject.closeCreateStage();
     }
 
