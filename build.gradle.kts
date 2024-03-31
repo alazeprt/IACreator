@@ -46,7 +46,7 @@ jlink {
     }
 
     jpackage {
-        installerOutputDir = file("${layout.buildDirectory}/installer")
+        installerOutputDir = file("${buildDir}/installer")
         if(org.gradle.internal.os.OperatingSystem.current().isWindows) {
             installerOptions.add("--win-dir-chooser")
             installerOptions.add("--win-per-user-install")
