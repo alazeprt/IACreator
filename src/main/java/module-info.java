@@ -5,6 +5,7 @@ module IACreator.main {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.dataformat.yaml;
     requires org.apache.logging.log4j;
+    requires org.apache.commons.io;
 
     exports com.alazeprt.iac;
     opens com.alazeprt.iac to javafx.fxml;

@@ -6,6 +6,7 @@ import com.alazeprt.iac.utils.IAObject;
 import com.alazeprt.iac.utils.ImageObject;
 import com.alazeprt.iac.utils.Item;
 import com.alazeprt.iac.utils.RecentProject;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -227,5 +228,9 @@ public class ProjectController {
 
     public void onAddItem() {
         AddItemUI.showAddItemStage();
+    }
+
+    public void onPackProject() {
+        PackingUI.showPackingItemStage(ProjectUI.iaConfig);
     }
 }

@@ -91,7 +91,7 @@ public class CreateProjectController {
     }
 
     public void onInputName() {
-        Pattern pattern = Pattern.compile("^[0-9a-zA-Z_]{1,}$");
+        Pattern pattern = Pattern.compile("^[0-9a-zA-Z_]+$");
         nameError.setVisible(!pattern.matcher(namespace.getText()).matches());
     }
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: #cdd8e0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alazeprt.iac.ui.PackingUIController">
+   <children>
+      <Label layoutX="168.0" layoutY="14.0" text="Packaging your project..." textFill="#27374d">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Button fx:id="OK" layoutX="550.0" layoutY="257.0" mnemonicParsing="false" onAction="#onClickOK" style="-fx-background-color: #9DB2BF;" text="OK" />
+      <Label fx:id="action" layoutX="50.0" layoutY="59.0" prefWidth="500.0" textFill="#27374d" />
+      <Button fx:id="explorer" layoutX="420.0" layoutY="257.0" mnemonicParsing="false" onAction="#onOpenExplorer" style="-fx-background-color: #9DB2BF;" text="Open In Explorer" />
+      <Button fx:id="cancel" layoutX="14.0" layoutY="257.0" mnemonicParsing="false" onAction="#onCancel" style="-fx-background-color: #c4d1da;" text="Cancel" />
+      <ProgressBar fx:id="progress" layoutX="50.0" layoutY="120.0" prefHeight="60.0" prefWidth="500.0" progress="0.0" style="-fx-accent: #6699cc;" />
+   </children>
+</AnchorPane>
