@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.alazeprt.iac"
-version = "1.0"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -46,7 +46,7 @@ jlink {
     }
 
     jpackage {
-        installerOutputDir = file("$buildDir/installer")
+        installerOutputDir = file("${layout.buildDirectory}/installer")
         if(org.gradle.internal.os.OperatingSystem.current().isWindows) {
             installerOptions.add("--win-dir-chooser")
             installerOptions.add("--win-per-user-install")
