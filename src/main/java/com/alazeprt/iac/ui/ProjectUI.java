@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class ProjectUI {
     private static Stage mainStage;
@@ -38,12 +39,12 @@ public class ProjectUI {
         Stage projectStage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(ProjectUI.class.getResource("Project.fxml"));
+            root = FXMLLoader.load(Objects.requireNonNull(ProjectUI.class.getResource("Project.fxml")));
         } catch (IOException e) {
             logger.fatal("Failed to Project Page!", e);
         }
-        Scene scene = new Scene(root, 960, 640);
-        projectStage.getIcons().add(new Image(ProjectUI.class.getResource("image/icon.png").toString()));
+        Scene scene = new Scene(Objects.requireNonNull(root), 960, 640);
+        projectStage.getIcons().add(new Image(Objects.requireNonNull(ProjectUI.class.getResource("image/icon.png")).toString()));
         projectStage.setTitle("Project - " + projectName);
         projectStage.setScene(scene);
         projectStage.setResizable(false);

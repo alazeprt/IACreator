@@ -25,6 +25,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Objects;
 
 import static com.alazeprt.iac.ui.CreateProjectController.projectCount;
 
@@ -47,7 +48,7 @@ public class WelcomeController {
     }
 
     public void initialize() {
-        iacIcon.setImage(new Image(WelcomeController.class.getResource("image/icon.png").toString()));
+        iacIcon.setImage(new Image(Objects.requireNonNull(WelcomeController.class.getResource("image/icon.png")).toString()));
         injectProjectListPane(projectListPane);
         ApplicationConfig.initializeContent();
     }
@@ -70,7 +71,7 @@ public class WelcomeController {
                 recentProject = new RecentProject(file.getName(), Path.of(file.getAbsolutePath()));
                 ProjectConfig.create(recentProject);
                 ApplicationConfig.writeRecentContent(recentProject);
-            } else if (!ApplicationConfig.existRecentProject(recentProject)) {
+            } else if (ApplicationConfig.existRecentProject(recentProject)) {
                 ApplicationConfig.writeRecentContent(recentProject);
             }
             ProjectUI.showMainStage(file.getAbsolutePath(), recentProject.getNamespace());
@@ -140,7 +141,7 @@ public class WelcomeController {
         projectPath.setTextFill(Paint.valueOf("#9db2bf"));
         projectPath.setMaxWidth(450);
         anchorPane.getChildren().add(projectPath);
-        ImageView removeImage = new ImageView(new Image(CreateProjectController.class.getResource("image/remove.png").toString()));
+        ImageView removeImage = new ImageView(new Image(Objects.requireNonNull(CreateProjectController.class.getResource("image/remove.png")).toString()));
         removeImage.setLayoutX(480);
         removeImage.setLayoutY(35);
         removeImage.setFitWidth(30);

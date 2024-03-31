@@ -1,15 +1,12 @@
 package com.alazeprt.iac.ui;
 
-import com.alazeprt.iac.config.IAConfig;
 import com.alazeprt.iac.config.ProjectConfig;
 import com.alazeprt.iac.utils.Item;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Objects;
 
 public class AddItemController {
     @FXML
@@ -34,7 +32,7 @@ public class AddItemController {
     private static final Logger logger = LogManager.getLogger();
 
     public void initialize() {
-        folderIcon.setImage(new Image(AddItemController.class.getResource("image/folder.png").toString()));
+        folderIcon.setImage(new Image(Objects.requireNonNull(AddItemController.class.getResource("image/folder.png")).toString()));
     }
 
     public void openFolderChooser() {

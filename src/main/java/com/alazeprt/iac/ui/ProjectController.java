@@ -1,13 +1,11 @@
 package com.alazeprt.iac.ui;
 
 import com.alazeprt.iac.config.ApplicationConfig;
-import com.alazeprt.iac.config.IAConfig;
 import com.alazeprt.iac.config.ProjectConfig;
 import com.alazeprt.iac.utils.IAObject;
 import com.alazeprt.iac.utils.ImageObject;
 import com.alazeprt.iac.utils.Item;
 import com.alazeprt.iac.utils.RecentProject;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -28,6 +26,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Path;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 
 public class ProjectController {
@@ -87,7 +86,7 @@ public class ProjectController {
                 if(folder.listFiles() == null) {
                     continue;
                 }
-                for(File file : folder.listFiles()) {
+                for(File file : Objects.requireNonNull(folder.listFiles())) {
                     if(file.isFile()) {
                         thisItem.getChildren().add(new TreeItem<>(file.getName()));
                     }
@@ -96,7 +95,7 @@ public class ProjectController {
             if(folder.listFiles() == null) {
                 continue;
             }
-            for (File child : folder.listFiles()) {
+            for (File child : Objects.requireNonNull(folder.listFiles())) {
                 if (child.isDirectory()) {
                     queue.offer(child);
                 }
@@ -107,10 +106,10 @@ public class ProjectController {
     }
 
     public void initialize() {
-        generateTreeView(ProjectUI.iaConfig.getRoot());
+        generateTreeView(ProjectUI.iaConfig.root());
         injectPane(objectsPane);
         ProjectConfig.readProjectObject(ProjectUI.iaConfig).forEach(ProjectController::addObject);
-        splitPane.getStylesheets().add(ProjectUI.class.getResource("style/MainPage.css").toString());
+        splitPane.getStylesheets().add(Objects.requireNonNull(ProjectUI.class.getResource("style/MainPage.css")).toString());
     }
 
     private static void injectPane(AnchorPane anchorPane) {
@@ -150,7 +149,7 @@ public class ProjectController {
                 recentProject = new RecentProject(file.getName(), Path.of(file.getAbsolutePath()));
                 ProjectConfig.create(recentProject);
                 ApplicationConfig.writeRecentContent(recentProject);
-            } else if (!ApplicationConfig.existRecentProject(recentProject)) {
+            } else if (ApplicationConfig.existRecentProject(recentProject)) {
                 ApplicationConfig.writeRecentContent(recentProject);
             }
             ProjectUI.showMainStage(file.getAbsolutePath(), recentProject.getNamespace());
@@ -200,7 +199,7 @@ public class ProjectController {
             } catch (FileNotFoundException e) {
                 logger.error("Failed to read image file!", e);
             }
-            ImageView imageView = new ImageView(new Image(stream));
+            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(stream)));
             imageView.setFitWidth(50);
             imageView.setFitHeight(50);
             imageView.setLayoutX(14);

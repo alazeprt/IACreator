@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class AddItemUI {
     private static Stage stage;
@@ -30,12 +31,12 @@ public class AddItemUI {
         Stage addItemStage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(AddItemUI.class.getResource("AddItem.fxml"));
+            root = FXMLLoader.load(Objects.requireNonNull(AddItemUI.class.getResource("AddItem.fxml")));
         } catch (IOException e) {
             logger.fatal("Failed to load Create Item Page!", e);
         }
-        Scene scene = new Scene(root, 450, 400);
-        addItemStage.getIcons().add(new Image(AddItemUI.class.getResource("image/icon.png").toString()));
+        Scene scene = new Scene(Objects.requireNonNull(root), 450, 400);
+        addItemStage.getIcons().add(new Image(Objects.requireNonNull(AddItemUI.class.getResource("image/icon.png")).toString()));
         addItemStage.setTitle("Adding item...");
         addItemStage.setScene(scene);
         addItemStage.setResizable(false);

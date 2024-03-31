@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class EditItemUI {
     private static Stage stage;
@@ -32,12 +33,12 @@ public class EditItemUI {
         Stage editItemStage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(EditItemUI.class.getResource("EditItem.fxml"));
+            root = FXMLLoader.load(Objects.requireNonNull(EditItemUI.class.getResource("EditItem.fxml")));
         } catch (IOException e) {
             logger.fatal("Failed to load Edit Item Page!", e);
         }
-        Scene scene = new Scene(root, 450, 400);
-        editItemStage.getIcons().add(new Image(AddItemUI.class.getResource("image/icon.png").toString()));
+        Scene scene = new Scene(Objects.requireNonNull(root), 450, 400);
+        editItemStage.getIcons().add(new Image(Objects.requireNonNull(AddItemUI.class.getResource("image/icon.png")).toString()));
         editItemStage.setTitle("Editing item...");
         editItemStage.setScene(scene);
         editItemStage.setResizable(false);

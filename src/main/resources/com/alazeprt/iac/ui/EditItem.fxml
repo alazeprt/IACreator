@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="450.0" style="-fx-background-color: #cdd8e0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alazeprt.iac.ui.EditItemController">
-   <children>
-      <Label layoutX="40.0" layoutY="40.0" text="Display Name:" textFill="#27374d">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="40.0" layoutY="120.0" text="Resource Location: " textFill="#27374d">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <TextField fx:id="displayName" layoutX="153.0" layoutY="37.0" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #d5dfe7;" />
-      <TextField fx:id="resourceLocation" layoutX="40.0" layoutY="155.0" onKeyTyped="#onChangePath" prefHeight="30.0" prefWidth="250.0" style="-fx-background-color: #d5dfe7;" />
-      <Button layoutX="14.0" layoutY="357.0" mnemonicParsing="false" onAction="#remove" style="-fx-background-color: #c4d1da;" text="Remove Item" />
-      <Button layoutX="379.0" layoutY="357.0" mnemonicParsing="false" onAction="#cancel" style="-fx-background-color: #c4d1da;" text="Cancel" />
-      <Button layoutX="300.0" layoutY="156.0" mnemonicParsing="false" onAction="#openFolderChooser" prefHeight="29.0" prefWidth="29.0" style="-fx-background-color: rgba(0,0,0,0);" />
-      <ImageView fx:id="folderIcon" fitHeight="29.0" fitWidth="29.0" layoutX="300.0" layoutY="156.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="locationWarn" layoutX="40.0" layoutY="190.0" text="Error: The location not found or it isn't a file!" textFill="#f50101" visible="false" />
-      <Button layoutX="335.0" layoutY="357.0" mnemonicParsing="false" onAction="#confirm" style="-fx-background-color: #9DB2BF;" text="OK" />
-   </children>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="450.0" style="-fx-background-color: #cdd8e0;" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.alazeprt.iac.ui.EditItemController">
+   <Label layoutX="40.0" layoutY="40.0" text="Display Name:" textFill="#27374d">
+      <font>
+         <Font size="16.0"/>
+      </font>
+   </Label>
+   <Label layoutX="40.0" layoutY="120.0" text="Resource Location: " textFill="#27374d">
+      <font>
+         <Font size="16.0"/>
+      </font>
+   </Label>
+   <TextField fx:id="displayName" layoutX="153.0" layoutY="37.0" prefHeight="30.0" prefWidth="120.0"
+              style="-fx-background-color: #d5dfe7;"/>
+   <TextField fx:id="resourceLocation" layoutX="40.0" layoutY="155.0" onKeyTyped="#onChangePath" prefHeight="30.0"
+              prefWidth="250.0" style="-fx-background-color: #d5dfe7;"/>
+   <Button layoutX="14.0" layoutY="357.0" mnemonicParsing="false" onAction="#remove"
+           style="-fx-background-color: #c4d1da;" text="Remove Item"/>
+   <Button layoutX="379.0" layoutY="357.0" mnemonicParsing="false" onAction="#cancel"
+           style="-fx-background-color: #c4d1da;" text="Cancel"/>
+   <Button layoutX="300.0" layoutY="156.0" mnemonicParsing="false" onAction="#openFolderChooser" prefHeight="29.0"
+           prefWidth="29.0" style="-fx-background-color: rgba(0,0,0,0);"/>
+   <ImageView fx:id="folderIcon" fitHeight="29.0" fitWidth="29.0" layoutX="300.0" layoutY="156.0"
+              mouseTransparent="true" pickOnBounds="true" preserveRatio="true"/>
+   <Label fx:id="locationWarn" layoutX="40.0" layoutY="190.0" text="Error: The location not found or it isn't a file!"
+          textFill="#f50101" visible="false"/>
+   <Button layoutX="335.0" layoutY="357.0" mnemonicParsing="false" onAction="#confirm"
+           style="-fx-background-color: #9DB2BF;" text="OK"/>
 </AnchorPane>

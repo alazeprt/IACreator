@@ -1,41 +1,22 @@
 package com.alazeprt.iac.config;
 
-import com.alazeprt.iac.utils.IAObject;
 import com.alazeprt.iac.utils.Item;
-import com.fasterxml.jackson.databind.cfg.ConfigFeature;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.channels.FileChannel;
-import java.nio.file.CopyOption;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IAConfig {
-    private final File root;
-    private final String projectName;
+public record IAConfig(String projectName, File root) {
     private static final Logger logger = LogManager.getLogger();
-    public IAConfig(String projectName, File root) {
-        this.root = root;
-        this.projectName = projectName;
-    }
 
     public void generateDefaultConfig() {
-        if(defaultConfigExists()) {
+        if (defaultConfigExists()) {
             return;
         }
         Map<String, Object> map = new HashMap<>();
@@ -46,8 +27,8 @@ public class IAConfig {
         mapper.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
         try {
             File file = new File(root + "/configs/");
-            if(!file.exists()) {
-                if(!file.mkdirs()) {
+            if (!file.exists()) {
+                if (!file.mkdirs()) {
                     logger.error("Failed to create configs folder!");
                     return;
                 }
@@ -66,7 +47,7 @@ public class IAConfig {
             Map<String, Object> map = mapper.readValue(new File(root + "/configs/" + projectName + ".yml"), HashMap.class);
             Map<String, Object> info = (Map<String, Object>) map.get("info");
             String namespace = info.get("namespace").toString();
-            if(namespace.equals(projectName)) {
+            if (namespace.equals(projectName)) {
                 return true;
             } else {
                 logger.warn("Project's default config's namespace is wrong!");
@@ -103,14 +84,6 @@ public class IAConfig {
         } catch (IOException e) {
             logger.error("Failed to write item's config!", e);
         }
-    }
-
-    public File getRoot() {
-        return root;
-    }
-
-    public String getProjectName() {
-        return projectName;
     }
 
     public void removeItemConfig(Item item) {

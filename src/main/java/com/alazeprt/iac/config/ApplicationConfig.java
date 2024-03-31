@@ -1,6 +1,5 @@
 package com.alazeprt.iac.config;
 
-import com.alazeprt.iac.ui.CreateProjectController;
 import com.alazeprt.iac.ui.WelcomeController;
 import com.alazeprt.iac.utils.RecentProject;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -132,7 +131,7 @@ public class ApplicationConfig {
 
     public static void unwriteRecentContent(UUID uuid) {
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = null;
+        Map<String, Object> map;
         try {
             map = mapper.readValue(new File(".iac.json"), HashMap.class);
         } catch (IOException e) {
@@ -150,21 +149,21 @@ public class ApplicationConfig {
 
     public static boolean existRecentProject(RecentProject recentProject) {
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = null;
+        Map<String, Object> map;
         try {
             map = mapper.readValue(new File(".iac.json"), HashMap.class);
         } catch (IOException e) {
             logger.error("Failed to read .iac.json!", e);
-            return false;
+            return true;
         }
         if(map.get("recents") == null) {
-            return false;
+            return true;
         }
         for(LinkedHashMap<String, Object> project1 : ((List<LinkedHashMap<String, Object>>) map.get("recents"))) {
             if(project1.get("uuid").equals(recentProject.getUuid().toString())) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }

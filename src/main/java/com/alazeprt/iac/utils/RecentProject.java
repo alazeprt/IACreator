@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.UUID;
 
 public class RecentProject {
@@ -47,12 +48,12 @@ public class RecentProject {
         Stage createProjectStage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(WelcomeUI.class.getResource("NewProject.fxml"));
+            root = FXMLLoader.load(Objects.requireNonNull(WelcomeUI.class.getResource("NewProject.fxml")));
         } catch (IOException e) {
             logger.fatal("Failed to load Create New Project Page!", e);
         }
-        Scene scene = new Scene(root, 450, 400);
-        createProjectStage.getIcons().add(new Image(WelcomeUI.class.getResource("image/icon.png").toString()));
+        Scene scene = new Scene(Objects.requireNonNull(root), 450, 400);
+        createProjectStage.getIcons().add(new Image(Objects.requireNonNull(WelcomeUI.class.getResource("image/icon.png")).toString()));
         createProjectStage.setTitle("New Project...");
         createProjectStage.setScene(scene);
         createProjectStage.setResizable(false);

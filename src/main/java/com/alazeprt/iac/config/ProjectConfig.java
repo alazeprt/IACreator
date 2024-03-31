@@ -60,7 +60,7 @@ public class ProjectConfig {
     }
 
     public static void writeProjectObject(IAObject iaObject, IAConfig config) {
-        File file = new File(config.getRoot() + "/.iac.json");
+        File file = new File(config.root() + "/.iac.json");
         ObjectMapper mapper = new ObjectMapper();
         if(!file.exists()) {
             config.generateDefaultConfig();
@@ -97,7 +97,7 @@ public class ProjectConfig {
     }
 
     public static List<IAObject> readProjectObject(IAConfig config) {
-        File file = new File(config.getRoot() + "/.iac.json");
+        File file = new File(config.root() + "/.iac.json");
         ObjectMapper mapper = new ObjectMapper();
         if(!file.exists()) {
             config.generateDefaultConfig();
@@ -132,7 +132,7 @@ public class ProjectConfig {
     }
 
     public static void removeProjectObject(Item item, IAConfig iaConfig) {
-        File file = new File(iaConfig.getRoot() + "/.iac.json");
+        File file = new File(iaConfig.root() + "/.iac.json");
         ObjectMapper mapper = new ObjectMapper();
         if(!file.exists()) {
             iaConfig.generateDefaultConfig();

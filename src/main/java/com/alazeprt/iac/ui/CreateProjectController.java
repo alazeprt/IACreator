@@ -4,23 +4,16 @@ import com.alazeprt.iac.config.ApplicationConfig;
 import com.alazeprt.iac.config.ProjectConfig;
 import com.alazeprt.iac.utils.RecentProject;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.List;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class CreateProjectController {
@@ -37,21 +30,14 @@ public class CreateProjectController {
     @FXML
     private TextField namespace;
 
-    private static AnchorPane projectListPane;
-
     protected static int projectCount = 0;
-    private static final Logger logger = LogManager.getLogger();
 
     @FXML
     private TextField folder;
 
     public void initialize() {
-        folderIcon.setImage(new Image(CreateProjectController.class.getResource("image/folder.png").toString()));
+        folderIcon.setImage(new Image(Objects.requireNonNull(CreateProjectController.class.getResource("image/folder.png")).toString()));
         nameError.setVisible(true);
-    }
-
-    protected static void injectProjectListPane(AnchorPane anchorPane) {
-        projectListPane = anchorPane;
     }
 
     public void create() {
@@ -69,7 +55,7 @@ public class CreateProjectController {
             path.toFile().mkdirs();
         }
         RecentProject recentProject = new RecentProject(namespace.getText(), Path.of(folder.getText()));
-        if(!ApplicationConfig.existRecentProject(recentProject)) {
+        if(ApplicationConfig.existRecentProject(recentProject)) {
             ApplicationConfig.writeRecentContent(recentProject);
         }
         WelcomeController.addProjects(recentProject);

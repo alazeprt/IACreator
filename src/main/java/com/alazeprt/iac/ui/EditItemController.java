@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Objects;
 
 public class EditItemController {
 
@@ -30,7 +31,7 @@ public class EditItemController {
     protected static Item item;
 
     public void initialize() {
-        folderIcon.setImage(new Image(AddItemController.class.getResource("image/folder.png").toString()));
+        folderIcon.setImage(new Image(Objects.requireNonNull(AddItemController.class.getResource("image/folder.png")).toString()));
         displayName.setText(item.getName());
         resourceLocation.setText(item.getResource().toString());
     }

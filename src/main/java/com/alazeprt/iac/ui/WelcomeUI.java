@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class WelcomeUI extends Application {
     private static final Logger logger = LogManager.getLogger();
@@ -24,12 +25,12 @@ public class WelcomeUI extends Application {
         logger.info("Loading Welcome Page...");
         Parent root = null;
         try {
-            root = FXMLLoader.load(WelcomeUI.class.getResource("Welcome.fxml"));
+            root = FXMLLoader.load(Objects.requireNonNull(WelcomeUI.class.getResource("Welcome.fxml")));
         } catch (IOException e) {
             logger.fatal("Failed to load Welcome Page!", e);
         }
-        Scene scene = new Scene(root, 800, 600);
-        primaryStage.getIcons().add(new Image(WelcomeUI.class.getResource("image/icon.png").toString()));
+        Scene scene = new Scene(Objects.requireNonNull(root), 800, 600);
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(WelcomeUI.class.getResource("image/icon.png")).toString()));
         primaryStage.setTitle("IACreator");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
@@ -41,12 +42,12 @@ public class WelcomeUI extends Application {
         Stage primaryStage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(WelcomeUI.class.getResource("Welcome.fxml"));
+            root = FXMLLoader.load(Objects.requireNonNull(WelcomeUI.class.getResource("Welcome.fxml")));
         } catch (IOException e) {
             logger.fatal("Failed to load Welcome Page!", e);
         }
-        Scene scene = new Scene(root, 800, 600);
-        primaryStage.getIcons().add(new Image(WelcomeUI.class.getResource("image/icon.png").toString()));
+        Scene scene = new Scene(Objects.requireNonNull(root), 800, 600);
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(WelcomeUI.class.getResource("image/icon.png")).toString()));
         primaryStage.setTitle("IACreator");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);

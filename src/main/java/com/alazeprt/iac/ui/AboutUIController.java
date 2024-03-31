@@ -1,6 +1,5 @@
 package com.alazeprt.iac.ui;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class AboutUIController {
     private static Stage aboutStage;
@@ -21,12 +21,12 @@ public class AboutUIController {
         Stage stage = new Stage();
         Parent root = null;
         try {
-            root = FXMLLoader.load(AboutUIController.class.getResource("About.fxml"));
+            root = FXMLLoader.load(Objects.requireNonNull(AboutUIController.class.getResource("About.fxml")));
         } catch (IOException e) {
             logger.fatal("Failed to load About Page!", e);
         }
-        Scene scene = new Scene(root, 300, 200);
-        stage.getIcons().add(new Image(AboutUIController.class.getResource("image/icon.png").toString()));
+        Scene scene = new Scene(Objects.requireNonNull(root), 300, 200);
+        stage.getIcons().add(new Image(Objects.requireNonNull(AboutUIController.class.getResource("image/icon.png")).toString()));
         stage.setTitle("About");
         stage.setScene(scene);
         stage.setResizable(false);
