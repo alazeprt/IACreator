@@ -27,7 +27,7 @@ public class AddItemUI {
 
     private static void showAddItemStageHandler() {
         logger.info("Loading Create Item Page...");
-        Stage createProjectStage = new Stage();
+        Stage addItemStage = new Stage();
         Parent root = null;
         try {
             root = FXMLLoader.load(AddItemUI.class.getResource("AddItem.fxml"));
@@ -35,12 +35,12 @@ public class AddItemUI {
             logger.fatal("Failed to load Create Item Page!", e);
         }
         Scene scene = new Scene(root, 450, 400);
-        createProjectStage.getIcons().add(new Image(AddItemUI.class.getResource("image/icon.png").toString()));
-        createProjectStage.setTitle("New Project...");
-        createProjectStage.setScene(scene);
-        createProjectStage.setResizable(false);
-        createProjectStage.show();
-        stage = createProjectStage;
+        addItemStage.getIcons().add(new Image(AddItemUI.class.getResource("image/icon.png").toString()));
+        addItemStage.setTitle("Adding item...");
+        addItemStage.setScene(scene);
+        addItemStage.setResizable(false);
+        addItemStage.show();
+        stage = addItemStage;
     }
 
     public static void closeAddItemStage() {

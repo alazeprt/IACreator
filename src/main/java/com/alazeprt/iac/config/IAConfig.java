@@ -112,4 +112,24 @@ public class IAConfig {
     public String getProjectName() {
         return projectName;
     }
+
+    public void removeItemConfig(Item item) {
+        YAMLMapper mapper = new YAMLMapper();
+        mapper.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> items = new HashMap<>();
+        try {
+            map = mapper.readValue(new File(root + "/configs/" + projectName + ".yml"), HashMap.class);
+            items = (Map<String, Object>) map.getOrDefault("items", new HashMap<>());
+        } catch (IOException e) {
+            logger.error("Failed to write item's config!", e);
+        }
+        items.remove(item.toNamespace());
+        map.put("items", items);
+        try {
+            mapper.writeValue(new File(root + "/configs/" + projectName + ".yml"), map);
+        } catch (IOException e) {
+            logger.error("Failed to write item's config!", e);
+        }
+    }
 }

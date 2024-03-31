@@ -130,4 +130,36 @@ public class ProjectConfig {
         }
         return iaObjects;
     }
+
+    public static void removeProjectObject(Item item, IAConfig iaConfig) {
+        File file = new File(iaConfig.getRoot() + "/.iac.json");
+        ObjectMapper mapper = new ObjectMapper();
+        if(!file.exists()) {
+            iaConfig.generateDefaultConfig();
+            return;
+        }
+        Map<String, Object> map;
+        try {
+            map = mapper.readValue(file, HashMap.class);
+            if(map == null) throw new RuntimeException("Map is null!");
+        } catch (Exception e) {
+            logger.error("Failed to read project's config!", e);
+            return;
+        }
+        Map<String, Object> objects;
+        try {
+            objects = (Map<String, Object>) map.get("objects");
+            if(objects == null) throw new RuntimeException("Objects is null!");
+        } catch (Exception e) {
+            logger.error("Failed to read objects of project's config!", e);
+            return;
+        }
+        objects.remove(item.toNamespace());
+        map.put("objects", objects);
+        try {
+            mapper.writeValue(file, map);
+        } catch (IOException e) {
+            logger.error("Failed to write project's config!", e);
+        }
+    }
 }

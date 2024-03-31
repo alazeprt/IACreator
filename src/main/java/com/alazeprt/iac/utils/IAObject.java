@@ -1,7 +1,7 @@
 package com.alazeprt.iac.utils;
 
 public abstract class IAObject {
-    private final String name;
+    private String name;
     public IAObject(String name) {
         this.name = name;
     }
@@ -13,5 +13,9 @@ public abstract class IAObject {
     public abstract IAObjectType getType();
     public String toNamespace() {
         return name.toLowerCase().replace(" ", "_");
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

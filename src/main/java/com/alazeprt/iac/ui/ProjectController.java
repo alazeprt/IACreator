@@ -172,14 +172,26 @@ public class ProjectController {
         }
         anchorPane.setLayoutX(x);
         anchorPane.setLayoutY(y);
-        anchorPane.setStyle("-fx-background-color: rgba(0,0,0,0);");
+        anchorPane.setStyle("-fx-background-color: transparent;");
         anchorPane.setStyle("-fx-border-color: #526D82;");
+        Button editButton = new Button();
+        editButton.setLayoutX(0);
+        editButton.setLayoutY(0);
+        editButton.setPrefWidth(200);
+        editButton.setPrefHeight(150);
+        editButton.setStyle("-fx-background-color: transparent;");
+        editButton.setOnAction(event -> {
+            if(clazz instanceof Item item) {
+                EditItemUI.showEditItemStage(item);
+            }
+        });
+        anchorPane.getChildren().add(editButton);
         Label objectName = new Label(clazz.getName());
         objectName.setLayoutX(14);
         objectName.setLayoutY(14);
         objectName.setFont(Font.font("System", FontWeight.BOLD, 24));
         objectName.setTextFill(Paint.valueOf("#27374d"));
-        objectName.setMaxWidth(300);
+        objectName.setMaxWidth(150);
         if(clazz instanceof ImageObject) {
             File file = ((ImageObject) clazz).getResource().toFile();
             InputStream stream = null;
@@ -205,6 +217,13 @@ public class ProjectController {
         anchorPane.getChildren().add(objectType);
         injectObjectsPane.getChildren().add(anchorPane);
         objectCount++;
+    }
+
+    public static void updateObject() {
+        logger.info("Updating object...");
+        injectObjectsPane.getChildren().clear();
+        objectCount = 0;
+        ProjectConfig.readProjectObject(ProjectUI.iaConfig).forEach(ProjectController::addObject);
     }
 
     public void onAddItem() {
