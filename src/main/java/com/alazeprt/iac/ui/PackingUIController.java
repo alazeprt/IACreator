@@ -80,13 +80,14 @@ public class PackingUIController {
     }
 
     public void onOpenExplorer() {
+        logger.info("Try opening artifact's folder...");
         new Thread(() -> {
             try {
                 Desktop.getDesktop().open(path.toFile());
             } catch (IOException e) {
                 logger.error("Failed to open folder!", e);
             }
-        });
+        }).start();
     }
 
     public void onCancel() {

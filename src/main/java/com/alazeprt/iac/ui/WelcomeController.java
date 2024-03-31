@@ -95,7 +95,7 @@ public class WelcomeController {
     }
 
     public void openGithub() {
-        logger.info("Opening GitHub Link...");
+        logger.info("Try opening GitHub Link...");
         new Thread(() -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://github.com/alazeprt/IACreator"));
@@ -106,7 +106,7 @@ public class WelcomeController {
     }
 
     public void openIssues() {
-        logger.info("Opening Issues Tracker...");
+        logger.info("Try opening Issues Tracker...");
         new Thread(() -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://github.com/alazeprt/IACreator/issues"));
