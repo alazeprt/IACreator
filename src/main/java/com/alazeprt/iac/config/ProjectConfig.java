@@ -1,5 +1,7 @@
 package com.alazeprt.iac.config;
 
+import com.alazeprt.iac.utils.IAObject;
+import com.alazeprt.iac.utils.Item;
 import com.alazeprt.iac.utils.RecentProject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -8,9 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ProjectConfig {
     private static final Logger logger = LogManager.getLogger();
@@ -57,5 +57,77 @@ public class ProjectConfig {
             } catch (Exception ignored) { }
         }
         return null;
+    }
+
+    public static void writeProjectObject(IAObject iaObject, IAConfig config) {
+        File file = new File(config.getRoot() + "/.iac.json");
+        ObjectMapper mapper = new ObjectMapper();
+        if(!file.exists()) {
+            config.generateDefaultConfig();
+        }
+        Map<String, Object> map;
+        try {
+            map = mapper.readValue(file, HashMap.class);
+            if(map == null) throw new RuntimeException("Map is null!");
+        } catch (Exception e) {
+            logger.error("Failed to read project's config!", e);
+            map = new HashMap<>();
+        }
+        Map<String, Object> objects;
+        try {
+            objects = (Map<String, Object>) map.get("objects");
+            if(objects == null) throw new RuntimeException("Objects is null!");
+        } catch (Exception e) {
+            logger.error("Failed to read objects of project's config!", e);
+            objects = new HashMap<>();
+        }
+        Map<String, String> itemMap = new HashMap<>();
+        itemMap.put("type", iaObject.getType().name());
+        itemMap.put("display_name", iaObject.getName());
+        if(iaObject instanceof Item) {
+            itemMap.put("resource", ((Item) iaObject).getResource().toString());
+        }
+        objects.put(iaObject.toNamespace(), itemMap);
+        map.put("objects", objects);
+        try {
+            mapper.writeValue(file, map);
+        } catch (IOException e) {
+            logger.error("Failed to write project's config!", e);
+        }
+    }
+
+    public static List<IAObject> readProjectObject(IAConfig config) {
+        File file = new File(config.getRoot() + "/.iac.json");
+        ObjectMapper mapper = new ObjectMapper();
+        if(!file.exists()) {
+            config.generateDefaultConfig();
+            return new ArrayList<>();
+        }
+        Map<String, Object> map;
+        try {
+            map = mapper.readValue(file, HashMap.class);
+            if(map == null) throw new RuntimeException("Map is null!");
+        } catch (Exception e) {
+            logger.error("Failed to read project's config!", e);
+            return new ArrayList<>();
+        }
+        Map<String, Object> objects;
+        try {
+            objects = (Map<String, Object>) map.get("objects");
+            if(objects == null) throw new RuntimeException("Objects is null!");
+        } catch (Exception e) {
+            logger.error("Failed to read objects of project's config!", e);
+            return new ArrayList<>();
+        }
+        List<IAObject> iaObjects = new ArrayList<>();
+        for(Map.Entry<String, Object> entry : objects.entrySet()) {
+            Map<String, String> itemMap = (Map<String, String>) entry.getValue();
+            String type = itemMap.get("type");
+            String name = itemMap.get("display_name");
+            if(type.equalsIgnoreCase("item")) {
+                iaObjects.add(new Item(name, Path.of(itemMap.get("resource"))));
+            }
+        }
+        return iaObjects;
     }
 }

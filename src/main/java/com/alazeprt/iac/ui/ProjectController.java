@@ -109,7 +109,7 @@ public class ProjectController {
     public void initialize() {
         generateTreeView(ProjectUI.iaConfig.getRoot());
         injectPane(objectsPane);
-        ProjectUI.iaConfig.getObjects().forEach(ProjectController::addObject);
+        ProjectConfig.readProjectObject(ProjectUI.iaConfig).forEach(ProjectController::addObject);
         splitPane.getStylesheets().add(ProjectUI.class.getResource("style/MainPage.css").toString());
     }
 

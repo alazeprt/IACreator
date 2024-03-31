@@ -58,7 +58,7 @@ public class AddItemController {
         logger.info("Creating new item...");
         Item item = new Item(displayName.getText(), Path.of(resourceLocation.getText()));
         ProjectUI.iaConfig.writeItemConfig(item);
-        ProjectUI.iaConfig.copyItemResource(item);
+        ProjectConfig.writeProjectObject(item, ProjectUI.iaConfig);
         ProjectController.addObject(item);
         AddItemUI.closeAddItemStage();
     }

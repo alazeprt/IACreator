@@ -105,36 +105,6 @@ public class IAConfig {
         }
     }
 
-    public void copyItemResource(Item item) {
-        try {
-            File file = new File(root + "/textures/item/");
-            file.mkdirs();
-            Files.copy(item.getResource(), Path.of(root + "/textures/item/" + item.toNamespace() + ".png"), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            logger.error("Failed to copy item's resource!", e);
-        }
-    }
-
-    public List<IAObject> getObjects() {
-        List<IAObject> objects = new ArrayList<>();
-        YAMLMapper mapper = new YAMLMapper();
-        mapper.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
-        try {
-            Map<String, Object> map = mapper.readValue(new File(root + "/configs/" + projectName + ".yml"), HashMap.class);
-            Map<String, Object> itemList = (Map<String, Object>) map.get("items");
-            for (Map.Entry<String, Object> entry : itemList.entrySet()) {
-                Map<String, Object> itemMap = (Map<String, Object>) entry.getValue();
-                Map<String, Object> resourceMap = (Map<String, Object>) itemMap.get("resource");
-                List<String> textures = (List<String>) resourceMap.get("textures");
-                Item item = new Item(entry.getKey(), Path.of(root + "/textures/" + textures.get(0)));
-                objects.add(item);
-            }
-        } catch (Exception e) {
-            logger.error("Failed to read project's config!", e);
-        }
-        return objects;
-    }
-
     public File getRoot() {
         return root;
     }
